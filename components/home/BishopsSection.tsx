@@ -19,7 +19,7 @@ export default function BishopsSection() {
     {
       name: "Baselious Joseph I",
       title: "Catholicos of the East",
-      image: "/bishops/Baselious Joseph1-696x1044.jpeg",
+      image: "/bishops/Baselious Joseph1.jpeg",
       offsetClass: "lg:translate-y-6",
     },
     {
@@ -65,6 +65,7 @@ export default function BishopsSection() {
                     src={bishop.image}
                     alt={bishop.name}
                     fill
+                    priority
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover object-top filter contrast-105 hover:scale-105 transition-all duration-500"
                   />
