@@ -11,22 +11,22 @@ interface Bishop {
 export default function BishopsSection() {
   const bishops: Bishop[] = [
     {
-      name: "Mor Baselios Joseph",
-      title: "Catholicos / Metropolitan Trustee",
-      image: "/bishops/Mor Baselios Joseph.jpg",
-      offsetClass: "lg:translate-y-6",
+      name: "His Holiness Moran Mor Ignatius Aphrem II",
+      title: "Patriarch of Antioch and All the East",
+      image: "/bishops/His-Holiness-Moran-Mor-Ignatius-Aphrem-II.png",
+      offsetClass: "lg:-translate-y-12 sm:-translate-y-6",
     },
     {
       name: "Baselious Joseph I",
       title: "Catholicos of the East",
       image: "/bishops/Baselious Joseph1-696x1044.jpeg",
-      offsetClass: "lg:-translate-y-12 sm:-translate-y-6",
+      offsetClass: "lg:translate-y-6",
     },
     {
       name: "Mor Eusebius Kuriakose",
       title: "Metropolitan",
       image: "/bishops/Mor Eusebius-Kuriakose.jpg",
-      offsetClass: "lg:translate-y-4",
+      offsetClass: "lg:translate-y-24",
     },
   ];
 

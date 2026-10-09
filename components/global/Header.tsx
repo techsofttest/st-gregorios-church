@@ -4,173 +4,284 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+interface MenuItem {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+interface MenuCategory {
+  title: string;
+  items: MenuItem[];
+}
+
+const megaMenuCategories: MenuCategory[] = [
+  {
+    title: "ABOUT US",
+    items: [
+      { label: "Church History", href: "/about#history" },
+      { label: "Patron Saint (St. Gregorios)", href: "/about#patron-saint" },
+      { label: "Vision & Mission", href: "/about#vision" },
+      { label: "Our Faith", href: "/about#faith" },
+      { label: "Diocese", href: "/about#diocese" },
+    ],
+  },
+  {
+    title: "HIERARCHY",
+    items: [
+      { label: "Patriarch", href: "/patriarch" },
+      { label: "Catholicos", href: "/catholicos" },
+      { label: "Metropolitan", href: "/metropolitan" },
+      { label: "Assistant Metropolitan", href: "/assistant-metropolitan" },
+      { label: "Vicar", href: "/vicar" },
+      { label: "Clergy", href: "/clergy" },
+    ],
+  },
+  {
+    title: "MANAGING COMMITTEE",
+    items: [
+      { label: "Office Bearers", href: "/committee#office-bearers" },
+      { label: "MC Members", href: "/committee#members" },
+      { label: "Internal Auditor", href: "/committee#auditor" },
+      { label: "Diocese Council Members", href: "/committee#council" },
+    ],
+  },
+  {
+    title: "SPIRITUAL ORGANIZATIONS",
+    items: [
+      { label: "Sunday School", href: "/ministries#sunday-school" },
+      { label: "Vanitha Samajam", href: "/ministries#vanitha-samajam" },
+      { label: "Youth Association", href: "/ministries#youth-association" },
+      { label: "Elders Forum", href: "/ministries#elders-forum" },
+      {
+        label: "Antiochian Faith Protection Movement",
+        href: "/ministries#faith-protection",
+      },
+      { label: "Prayer Fellowships", href: "/ministries#prayer-fellowships" },
+    ],
+  },
+  {
+    title: "EVENTS",
+    items: [
+      { label: "Liturgical Calendar", href: "/events#calendar" },
+      { label: "Annual Perunnal", href: "/feast" },
+      { label: "Passion Week", href: "/events#passion-week" },
+      { label: "Christmas", href: "/events#christmas" },
+      { label: "Easter", href: "/events#easter" },
+    ],
+  },
+  {
+    title: "NEWS & ANNOUNCEMENTS",
+    items: [
+      { label: "Latest News", href: "#news" },
+      { label: "Parish Notices", href: "#notices" },
+      { label: "Event Reports", href: "#reports" },
+      { label: "Newsletter", href: "#newsletter" },
+    ],
+  },
+  {
+    title: "GALLERY",
+    items: [
+      { label: "Photo Gallery", href: "/gallery#photos" },
+      { label: "Video Gallery", href: "/gallery#videos" },
+      { label: "Feast Gallery", href: "/gallery#feast" },
+      { label: "Historical Photos", href: "/gallery#historical" },
+    ],
+  },
+  {
+    title: "ST. GREGORIOS SCHOOL",
+    items: [
+      { label: "History", href: "/school#history" },
+      { label: "School Website", href: "https://stgregoriosschool.com", external: true },
+    ],
+  },
+  {
+    title: "DIRECTORY",
+    items: [
+      { label: "Members Login — Restricted Access", href: "/login" },
+    ],
+  },
+  {
+    title: "CONTACT US",
+    items: [
+      { label: "Contact Information", href: "/contact#info" },
+      { label: "Church Address", href: "/contact#address" },
+      { label: "Google Map", href: "/contact#map" },
+    ],
+  },
+];
+
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [nearFooter, setNearFooter] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 80);
-
-      // Check if user is scrolled down near the footer
-      const footerElement = document.querySelector("footer");
-      if (footerElement) {
-        const footerRect = footerElement.getBoundingClientRect();
-        // Hide header if top of footer comes within 100px of viewport bottom
-        setNearFooter(footerRect.top <= window.innerHeight + 50);
-      }
     };
 
     handleScroll();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mega menu on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const isSolidHeader = scrolled || menuOpen;
+
   return (
-    <>
-      {/* Top Right Menu Button when at Top of page (not scrolled) */}
-      <div
-        className={`fixed top-6 right-6 z-50 transition-all duration-500 ${mounted && !scrolled
-          ? "translate-y-0 opacity-100 pointer-events-auto"
-          : "-translate-y-4 opacity-0 pointer-events-none"
-          }`}
-      >
-        <button
-          type="button"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-          className="group flex h-14 w-14 sm:h-[60px] sm:w-[60px] shrink-0 items-center justify-center rounded-full bg-[#a53c33] text-white shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-[#d6a738] cursor-pointer"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${isSolidHeader
+        ? "bg-[#071b27] shadow-xl"
+        : "bg-transparent border-b border-transparent shadow-none"
+        }`}
+    >
+      {/* Top Header Bar */}
+      <div className="relative mx-auto flex max-w-[1600px] items-center justify-between px-5 sm:px-8 py-3.5">
+        {/* Church Logo & Branding (Hidden when over Hero, shown when scrolled or menu open) */}
+        <Link
+          href="/"
+          className={`group flex items-center gap-3.5 transition-opacity duration-300 ${isSolidHeader ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
         >
-          <span className="relative block h-[20px] w-[24px]">
-            <span
-              className={`absolute left-0 top-0 block h-[2.5px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[9px] rotate-45" : ""
-                }`}
-            />
-            <span
-              className={`absolute left-0 top-[9px] block h-[2.5px] w-[17px] bg-white transition-all duration-300 group-hover:w-full ${menuOpen ? "opacity-0" : ""
-                }`}
-            />
-            <span
-              className={`absolute left-0 top-[18px] block h-[2.5px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[9px] -rotate-45" : ""
-                }`}
-            />
-          </span>
-        </button>
-      </div>
-
-      {/* Floating Bottom Header Bar when scrolled (hidden when at footer) */}
-      <header
-        className={`fixed inset-x-0 bottom-4 sm:bottom-4 z-50 transition-all duration-500 ${mounted && scrolled && !nearFooter
-          ? "translate-y-0 opacity-100 pointer-events-auto"
-          : "pointer-events-none translate-y-6 opacity-0"
-          }`}
-      >
-        <div className="mx-auto flex max-w-[1500px] items-center justify-center gap-3 sm:gap-4 px-6">
-          {/* Logo Pill with Church Name */}
-          <Link
-            href="/"
-            aria-label="St. Gregorios Church Home"
-            className="group flex items-center gap-3.5 rounded-full bg-[#a53c33] pl-2 pr-6 py-2 text-[#080b0d] shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-[#d6a738]"
-            onClick={() => setMenuOpen(false)}
-          >
-            <Image
-              src="/logo/logo.png"
-              alt="St. Gregorios Logo"
-              width={44}
-              height={44}
-              className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-
-            <div className="block pr-1 text-left">
-              <div className="text-white font-display text-md sm:text-xl font-semibold leading-none tracking-[0.02em]">
-                St. Gregorios
-              </div>
-
-              <div className="mt-1 text-xs sm:text-sm font-semibold text-white">
-                Jacobite Syrian Orthodox Church
-              </div>
+          <Image
+            src="/logo/logo.png"
+            alt="St. Gregorios Logo"
+            width={48}
+            height={48}
+            className="h-10 w-10 sm:h-12 sm:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+          <div>
+            <div className="font-display text-lg sm:text-2xl font-bold tracking-wide text-white group-hover:text-[#d6b75b] transition-colors leading-tight">
+              St. Gregorios
             </div>
-          </Link>
+            <div className="text-[11px] sm:text-xs font-medium text-white/80 tracking-wide">
+              Jacobite Syrian Orthodox Church
+            </div>
+          </div>
+        </Link>
 
-          {/* Burger Circle in Scrolled Bottom Bar */}
+        {/* Centered Christian Orthodox Cross SVG */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 40 52"
+            className="h-7 w-7 sm:h-9 sm:w-9 text-[#d6b75b]"
+            fill="currentColor"
+            aria-label="Christian Orthodox Cross"
+          >
+            {/* Main Vertical Beam */}
+            <rect x="18" y="2" width="4" height="48" rx="0.5" />
+
+            {/* Top Inscription Bar */}
+            <rect x="13" y="8" width="14" height="3" rx="0.5" />
+
+            {/* Main Horizontal Arm Bar */}
+            <rect x="4" y="18" width="32" height="4" rx="0.5" />
+
+            {/* Slanted Lower Footrest Bar (Orthodox Suppedaneum) */}
+            <polygon points="10,39.5 30,33.5 30,36.5 10,42.5" />
+
+            {/* Ornate Budded Endings */}
+            <circle cx="20" cy="2" r="2" />
+            <circle cx="20" cy="50" r="2" />
+            <circle cx="4" cy="20" r="2" />
+            <circle cx="36" cy="20" r="2" />
+          </svg>
+        </div>
+
+
+
+        {/* Quick Top Bar Navigation / Menu Trigger */}
+        <div className="flex items-center gap-3 sm:gap-6 ml-auto">
           <button
             type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((prev) => !prev)}
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-            className="group flex h-14 w-14 sm:h-[60px] sm:w-[60px] shrink-0 items-center justify-center rounded-full bg-[#a53c33] text-white shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-[#d6a738] cursor-pointer"
+            aria-label="Toggle Navigation Menu"
+            className="group inline-flex items-center gap-2.5 rounded-none bg-[#a53c33] px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold tracking-wider uppercase text-white hover:bg-[#d6a738] transition-colors cursor-pointer border border-white/10 shadow-lg"
           >
-            <span className="relative block h-[20px] w-[24px]">
+            <span className="relative block h-4 w-5">
               <span
-                className={`absolute left-0 top-0 block h-[2.5px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[9px] rotate-45" : ""
+                className={`absolute left-0 top-0 block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[7px] rotate-45" : ""
                   }`}
               />
-
               <span
-                className={`absolute left-0 top-[9px] block h-[2.5px] w-[17px] bg-white transition-all duration-300 group-hover:w-full ${menuOpen ? "opacity-0" : ""
+                className={`absolute left-0 top-[7px] block h-[2px] w-4/5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""
                   }`}
               />
-
               <span
-                className={`absolute left-0 top-[18px] block h-[2.5px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[9px] -rotate-45" : ""
+                className={`absolute left-0 top-[14px] block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[7px] -rotate-45" : ""
                   }`}
               />
             </span>
+            <span>{menuOpen ? "Close Menu" : "Menu & Directory"}</span>
           </button>
         </div>
-      </header>
-
-
-      {/* Boxed navigation menu container */}
-      <div
-        className={`fixed inset-0 z-40 flex items-end sm:items-center justify-center p-4 sm:p-6 transition-all duration-300 ${menuOpen
-          ? "pointer-events-auto opacity-100"
-          : "pointer-events-none opacity-0"
-          }`}
-      >
-        {/* Dark Backdrop overlay to close when clicking outside */}
-        <div
-          className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"
-            }`}
-          onClick={() => setMenuOpen(false)}
-        />
-
-        {/* Boxed Content Card */}
-        <div
-          className={`relative z-10 w-full max-w-[680px] mb-24 sm:mb-0 bg-[#f7f4ed] p-8 sm:p-12 shadow-2xl transition-all duration-300 border border-[#171715]/10 ${menuOpen ? "translate-y-0 scale-100" : "translate-y-4 scale-95"
-            }`}
-        >
-          <nav className="flex flex-col items-center gap-5 text-center">
-            {[
-              { href: "/about", label: "About" },
-              { href: "/worship", label: "Worship" },
-              { href: "/feast", label: "Feast" },
-              { href: "/ministries", label: "Ministries" },
-              { href: "/history", label: "Our History" },
-              { href: "/patriarch", label: "Patriarch" },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="group relative inline-block font-display text-3xl tracking-wide text-black transition-colors duration-300 hover:text-[#a43a32] sm:text-4xl py-1 overflow-hidden"
-              >
-                <span>{link.label}</span>
-                {/* Normal state base underline track */}
-                <span className="absolute bottom-0 left-0 h-[1.5px] w-full bg-[#171715]/15" />
-                {/* Animated hover underline overlay moving left-to-right */}
-                <span className="absolute bottom-0 left-0 h-[2.5px] w-full bg-[#a43a32] -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0" />
-              </Link>
-            ))}
-          </nav>
-        </div>
       </div>
-    </>
+
+      {/* Full Width Mega Menu Overlay Dropdown with Custom Scrollbar when overflow */}
+      {menuOpen && (
+        <div className="relative w-full max-h-[82vh] overflow-y-auto bg-[#f7f4ed] text-[#080b0d] shadow-2xl transition-all [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#e9e3d7] [&::-webkit-scrollbar-thumb]:bg-[#a53c33]/60 hover:[&::-webkit-scrollbar-thumb]:bg-[#a53c33]">
+          <div className="mx-auto max-w-[1600px] px-6 sm:px-10 py-8">
+
+            {/* Mega Menu Grid: 5 Columns in 2 Rows */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
+              {megaMenuCategories.map((category) => (
+                <div key={category.title} className="flex flex-col">
+                  {/* Category Banner Header Box */}
+                  <div className="bg-[#a53c33] text-white text-xs sm:text-sm font-bold tracking-wider uppercase text-center py-2.5 px-3 rounded-none shadow-sm mb-3">
+                    {category.title}
+                  </div>
+
+                  {/* Sub-items List with animated sliding underline */}
+                  <ul className="space-y-2.5">
+                    {category.items.map((item) => (
+                      <li key={item.label} className="flex items-start">
+                        {item.external ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setMenuOpen(false)}
+                            className="group relative inline-block text-sm sm:text-base font-medium text-[#272522] hover:text-[#a53c33] transition-colors py-0.5 overflow-hidden leading-snug"
+                          >
+                            <span>{item.label}</span>
+                            {/* Base static underline */}
+                            <span className="absolute bottom-0 left-0 h-[1.5px] w-full bg-[#272522]/20" />
+                            {/* Animated sliding underline */}
+                            <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#a53c33] -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0" />
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="group relative inline-block text-sm sm:text-base font-medium text-[#272522] hover:text-[#a53c33] transition-colors py-0.5 overflow-hidden leading-snug"
+                          >
+                            <span>{item.label}</span>
+                            {/* Base static underline */}
+                            <span className="absolute bottom-0 left-0 h-[1.5px] w-full bg-[#272522]/20" />
+                            {/* Animated sliding underline */}
+                            <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#a53c33] -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0" />
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

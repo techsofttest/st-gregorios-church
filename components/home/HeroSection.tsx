@@ -19,7 +19,7 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section className="h-screen relative w-full overflow-hidden bg-[#080b0d] pt-10 sm:pt-14 pb-12 text-white">
+    <section className="h-screen relative w-full overflow-hidden bg-[#080b0d] pt-6 sm:pt-8 lg:pt-18 pb-12 text-white flex flex-col justify-start">
       {/* Background Image with Slow Subtle Zoom-in Animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
@@ -27,9 +27,8 @@ export default function HeroSection({
           alt="St. Gregorios Church"
           fill
           priority
-          className={`object-cover object-center transition-transform duration-[2000ms] ease-out ${
-            mounted ? "scale-100" : "scale-110"
-          }`}
+          className={`object-cover object-center transition-transform duration-[2000ms] ease-out ${mounted ? "scale-100" : "scale-110"
+            }`}
           sizes="100vw"
         />
         {/* Soft gradient overlay on left for clean text readability */}
@@ -37,13 +36,13 @@ export default function HeroSection({
       </div>
 
       {/* Main Content Container with Staggered Entrance Animations */}
-      <div className="relative z-10 mx-auto max-w-[1600px] px-8 sm:px-12 lg:px-16">
+      <div className="relative z-10 w-full max-w-[1600px] px-6 sm:px-10 lg:px-12">
+
         <div className="flex flex-col max-w-[480px]">
           {/* Header Logo & Subtitle - Fade & Slide Down */}
           <div
-            className={`mb-3 flex items-center gap-3 transition-all duration-1000 ease-out ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
-            }`}
+            className={`mb-3 flex items-center gap-3 transition-all duration-1000 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+              }`}
           >
             <Image
               src="/logo/logo.png"
@@ -59,9 +58,8 @@ export default function HeroSection({
 
           {/* Typography Header - Staggered Fade & Slide Up */}
           <h1
-            className={`font-display text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold leading-[1.08] tracking-[0.02em] text-white transition-all duration-1000 delay-300 ease-out ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`font-display text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold leading-[1.08] tracking-[0.02em] text-white transition-all duration-1000 delay-300 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
           >
             ST. GREGORIOS
             <br />
@@ -72,9 +70,8 @@ export default function HeroSection({
 
           {/* Subtitle - Staggered Fade & Slide Up */}
           <p
-            className={`mt-3 text-[11px] sm:text-xs font-bold tracking-[0.18em] text-white/80 uppercase transition-all duration-1000 delay-500 ease-out ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
+            className={`mt-3 text-[11px] sm:text-xs font-bold tracking-[0.18em] text-white/80 uppercase transition-all duration-1000 delay-500 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              }`}
           >
             MUMBAI PARISH • EST. 1952
           </p>
@@ -83,9 +80,8 @@ export default function HeroSection({
 
       {/* St. Gregorios PNG aligned to right edge with entrance slide-up */}
       <div
-        className={`absolute bottom-0 right-0 z-10 hidden md:block max-w-[28vw] lg:max-w-[360px] xl:max-w-[400px] pointer-events-none transition-all duration-1200 delay-400 ease-out ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-        }`}
+        className={`absolute bottom-0 right-0 z-10 hidden md:block max-w-[28vw] lg:max-w-[360px] xl:max-w-[400px] pointer-events-none transition-all duration-1200 delay-400 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          }`}
       >
         <Image
           src="/st-gregorios/st-gregorios.png"

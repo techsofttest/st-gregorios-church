@@ -7,10 +7,9 @@ import FeastSection from "@/components/home/FeastSection";
 import HeritageSection from "@/components/home/HeritageSection";
 import PatriarchSection from "@/components/home/PatriarchSection";
 import BishopsSection from "@/components/home/BishopsSection";
+import NewsSection from "@/components/home/NewsSection";
 import CommitteeSection from "@/components/home/CommitteeSection";
 import ClosingSection from "@/components/home/ClosingSection";
-
-
 
 export default function Home() {
   return (
@@ -23,6 +22,7 @@ export default function Home() {
       <HeritageSection />
       <PatriarchSection />
       <BishopsSection />
+      <NewsSection />
       <CommitteeSection />
       <ClosingSection />
       <Footer />
