@@ -33,7 +33,6 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
   }, [historyImages.length]);
 
   const milestones = [
-    { year: "1952", label: "Beginning" },
     { year: "1994", label: "Parish" },
     { year: "2002", label: "Consecration" },
   ];
@@ -69,21 +68,21 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
 
             <h2 className="section-title mt-4">
               From{" "}
-              <span className="text-[#d6b75b]">1952</span>
+              <span className="text-[#d6b75b]">1994</span>
               <br />
               onwards.
             </h2>
 
 
             <p className="mt-6 text-sm leading-7 text-white/85">
-              The Jacobite Syrian Church in Mumbai began its journey in 1952.
+              The Jacobite Syrian Church in Mumbai began its journey in 1994.
               Through decades of prayer, sacrifice and perseverance, the St.
               Gregorios parish grew into the spiritual home it is today.
             </p>
 
-            <div className="mt-4 grid grid-cols-3 py-3">
+            <div className="mt-4 grid grid-cols-2 py-3">
               {milestones.map((milestone) => (
-                <div key={milestone.year}>
+                <div key={`${milestone.year}-${milestone.label}`}>
                   <p className="font-display text-5xl text-[#d6b75b]">
                     {milestone.year}
                   </p>

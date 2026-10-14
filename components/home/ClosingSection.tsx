@@ -8,7 +8,7 @@ export default function ClosingSection() {
       {/* Background Image with Dark Vignette Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/interior/Golden Aisle to the Sacred Altar.png"
+          src="/interior/Ornate Symmetrical Church Sanctuary.png"
           alt="Golden Aisle to the Sacred Altar"
           fill
           priority

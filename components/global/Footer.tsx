@@ -25,7 +25,7 @@ export default function Footer() {
           width={420}
           height={600}
           style={{ width: "auto", height: "auto" }}
-          className="h-auto w-full object-contain object-top"
+          className="max-w-full h-auto object-contain object-top"
           priority
         />
       </div>
@@ -39,7 +39,7 @@ export default function Footer() {
           width={650}
           height={200}
           style={{ width: "auto", height: "auto" }}
-          className="w-full h-auto object-bottom object-right object-contain"
+          className="max-w-full h-auto object-bottom object-right object-contain"
         />
       </div>
 

@@ -23,7 +23,7 @@ export default function HeroSection({
       {/* Background Image with Slow Subtle Zoom-in Animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="/exterior/Sunlit White Colonial Church in Bloom.png"
+          src="/interior/Symmetrical Syrian Orthodox Sanctuary.png"
           alt="St. Gregorios Church"
           fill
           priority
@@ -73,7 +73,7 @@ export default function HeroSection({
             className={`mt-3 text-[11px] sm:text-xs font-bold tracking-[0.18em] text-white/80 uppercase transition-all duration-1000 delay-500 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
           >
-            MUMBAI PARISH • EST. 1952
+            Parish Est 1994
           </p>
         </div>
       </div>
@@ -88,9 +88,10 @@ export default function HeroSection({
           alt="St. Gregorios"
           width={400}
           height={500}
-          style={{ width: "auto", height: "auto" }}
-          className="h-auto w-full object-contain object-bottom drop-shadow-2xl"
           priority
+          sizes="(max-width: 768px) 100vw, 400px"
+          style={{ width: "auto", height: "auto" }}
+          className="max-w-full h-auto object-contain object-bottom drop-shadow-2xl"
         />
 
       </div>
