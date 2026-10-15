@@ -9,7 +9,7 @@ interface PatriarchSectionProps {
 export default function PatriarchSection({ imageSrc }: PatriarchSectionProps) {
   return (
     <section className="bg-[#e9e3d7] overflow-hidden">
-      <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="grid lg:grid-cols-[1.1fr_0.9fr] items-stretch">
         {/* Content Container (Left Side) */}
         <div className="flex items-center px-7 py-20 sm:px-12 lg:px-16 xl:px-24">
           <ScrollReveal direction="left" duration={850}>
@@ -45,17 +45,18 @@ export default function PatriarchSection({ imageSrc }: PatriarchSectionProps) {
           </ScrollReveal>
         </div>
 
-        {/* Image Container (Right Side) */}
-        <ScrollReveal direction="right" delay={200} duration={850} className="h-full">
-          <div className="relative min-h-[600px] h-full w-full">
+        {/* Image Container (Right Side - Locked to 1:1 aspect ratio, filled to right) */}
+        <ScrollReveal direction="right" delay={200} duration={850} className="h-full w-full flex items-center justify-end">
+          <div className="relative aspect-square w-full h-full overflow-hidden">
             <Image
-              src="/moran-mor-ignatius-Aphrem/His-Holiness-Moran-Mor-Ignatius-Aphrem-II.png"
+              src="/moran-mor-ignatius-Aphrem/His-Holiness-Moran-Mor-Ignatius-Aphrem-II-2.png"
               alt="Syriac Orthodox ecclesiastical portrait"
               fill
+              priority
               className="object-cover grayscale-[15%]"
               sizes="(max-width: 1024px) 100vw, 45vw"
             />
-            <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#e9e3d7] via-[#e9e3d7]/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-32 sm:w-48 bg-gradient-to-r from-[#e9e3d7] via-[#e9e3d7]/40 to-transparent pointer-events-none" />
           </div>
         </ScrollReveal>
       </div>

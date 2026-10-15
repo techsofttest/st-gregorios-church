@@ -46,7 +46,7 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-[1500px]">
         <ScrollReveal direction="up" duration={800}>
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-start lg:pl-[34%]">
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] items-start lg:pl-[34%]">
             <div>
               <div className="flex items-center gap-3.5">
                 <Image
@@ -66,10 +66,24 @@ export default function Footer() {
                 </div>
               </div>
 
-              <p className="mt-5 max-w-[420px] text-sm leading-6 text-[#0c0e10]/90 font-normal">
-                Rooted in the apostolic faith and spiritual heritage of the
-                Syriac Orthodox Church of Antioch.
-              </p>
+              <div className="mt-5 text-sm leading-6 text-[#0c0e10]/85 font-normal">
+                <p className="font-semibold text-[#0c0e10] tracking-wide">
+                  ST. GREGORIOS JACOBITE SYRIAN ORTHODOX CHURCH
+                </p>
+                <p className="mt-1">
+                  ST. Gregorios Nagar, ACC Road, Lok Complex, Mulund (W),<br />
+                  Mumbai, Maharashtra, India — Pin: 400 080
+                </p>
+                <p className="mt-2 text-sm font-semibold">
+                  Email:{" "}
+                  <a
+                    href="mailto:sgjsochurch@gmail.com"
+                    className="text-[#8b2d26] !underline underline-offset-4 decoration-[#8b2d26] hover:text-[#5e1914] transition-colors"
+                  >
+                    sgjsochurch@gmail.com
+                  </a>
+                </p>
+              </div>
             </div>
 
             <div>

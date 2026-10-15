@@ -1,10 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 interface Bishop {
   name: string;
   title: string;
   image: string;
+  description: string;
+  link?: string;
 }
 
 export default function BishopsSection() {
@@ -12,14 +15,29 @@ export default function BishopsSection() {
     {
       name: "Baselious Joseph I",
       title: "Catholicos of the East",
-      image: "/bishops/Baselious Joseph1.jpeg",
+      image: "/bishops/Baselious Joseph2.png",
+      description:
+        "Providing spiritual shepherdship and archpastoral guidance to the Jacobite Syrian Christian community.",
+      link: "/about/catholicos",
     },
     {
       name: "Mor Eusebius Kuriakose",
       title: "Metropolitan",
       image: "/bishops/Mor Eusebius-Kuriakose.jpg",
+      description:
+        "Guiding our diocese with apostolic vision, pastoral care, and dedication to Gospel service.",
+      link: "/about/metropolitan",
     },
   ];
+
+  const vicar = {
+    name: "Rev. Fr. Eldo",
+    title: "Vicar",
+    image: "/vicar/FrEldo-Vicar.png",
+    description:
+      "Administering the parish sacramental life, spiritual counseling, and ministering to all families of St. Gregorios Church.",
+    link: "/about/vicar",
+  };
 
   return (
     <section className="relative bg-[#f7f4ed] py-20 lg:py-28 overflow-hidden">
@@ -75,49 +93,153 @@ export default function BishopsSection() {
           <div className="mx-auto max-w-2xl text-center">
             <p className="eyebrow text-[#a43a32]">Spiritual Leadership</p>
             <h2 className="section-title mt-4 mb-16">
-              Our Hierarchs &amp; <span className="text-[#a43a32]">Bishops</span>
+              Our Hierarchs
             </h2>
           </div>
         </ScrollReveal>
 
-        {/* 2 Horizontal Cards Placed Side-by-Side (Second card offset slightly lower on desktop) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-          {bishops.map((bishop, idx) => (
-            <ScrollReveal
-              key={bishop.name}
-              direction="up"
-              delay={200 + idx * 150}
-              duration={850}
-              className={`h-full ${idx === 1 ? "lg:translate-y-10" : ""}`}
-            >
-              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5 cursor-pointer">
+        {/* Bento Grid: Catholicos on the Left (Full Height / Prominent), Metropolitan & Vicar Stacked on the Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+          {/* Left Column (Catholicos of the East - Large Prominent Card) */}
+          <ScrollReveal
+            direction="left"
+            delay={200}
+            duration={850}
+            className="lg:col-span-6 h-full"
+          >
+            <div className="group relative overflow-hidden h-full min-h-[420px] sm:min-h-[480px] lg:min-h-full transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col justify-end bg-[#1c1a17]">
+              {/* Full Bleed Background Image */}
+              <div className="absolute inset-0 w-full h-full">
+                <Image
+                  src={bishops[0].image}
+                  alt={bishops[0].name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+
+              {/* Bottom Gradient Overlay for optimal legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 via-45% to-transparent pointer-events-none" />
+
+              {/* Content Container placed at the bottom over gradient */}
+              <div className="relative z-10 p-6 sm:p-8 lg:p-9 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <div className="max-w-[360px]">
+                  <p className="eyebrow text-white">
+                    {bishops[0].title}
+                  </p>
+
+                  <h2 className="font-display text-2xl sm:text-4xl font-semibold leading-tight mt-2 text-white transition-colors duration-300 group-hover:text-[#f3d882]">
+                    {bishops[0].name}
+                  </h2>
+
+                  <p className="mt-2.5 text-xs sm:text-[13px] leading-relaxed text-white/85">
+                    {bishops[0].description}
+                  </p>
+
+                  <div className="mt-5">
+                    <Link
+                      href={bishops[0].link || "/about"}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#e1c66c] hover:text-[#fff] transition-colors group/btn"
+                    >
+                      <span>Read More</span>
+                      <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Right Column: Stacked Bento Cards (Metropolitan on Top, Vicar Below) */}
+          <div className="lg:col-span-6 flex flex-col gap-6 lg:gap-8">
+            {/* Top Right: Metropolitan */}
+            <ScrollReveal direction="right" delay={300} duration={850} className="flex-1">
+              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
                 {/* Content Container */}
-                <div className="flex items-center px-6 py-10 sm:px-8 sm:py-12 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <div className="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-8 transition-transform duration-500 ease-out group-hover:translate-x-1">
                   <div className="max-w-[340px]">
                     <p className="eyebrow text-[#a43a32]">
-                      {bishop.title}
+                      {bishops[1].title}
                     </p>
 
-                    <h2 className="font-display text-2xl sm:text-4xl font-semibold leading-tight mt-3 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
-                      {bishop.name}
+                    <h2 className="font-display text-xl sm:text-2xl font-semibold leading-tight mt-1.5 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
+                      {bishops[1].name}
                     </h2>
+
+                    <p className="mt-2 text-xs sm:text-[13px] leading-relaxed text-[#524c43]">
+                      {bishops[1].description}
+                    </p>
+
+                    <div className="mt-4">
+                      <Link
+                        href={bishops[1].link || "/about"}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#a43a32] hover:text-[#78241d] transition-colors group/btn"
+                      >
+                        <span>Read More</span>
+                        <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
                 {/* Image Container */}
-                <div className="relative min-h-[300px] sm:min-h-[360px] w-full overflow-hidden bg-[#ded7c9]">
+                <div className="relative min-h-[220px] sm:min-h-[240px] w-full overflow-hidden bg-[#ded7c9]">
                   <Image
-                    src={bishop.image}
-                    alt={bishop.name}
+                    src={bishops[1].image}
+                    alt={bishops[1].name}
                     fill
-                    priority
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
               </div>
             </ScrollReveal>
-          ))}
+
+            {/* Bottom Right: Vicar */}
+            <ScrollReveal direction="right" delay={450} duration={850} className="flex-1">
+              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
+                {/* Content Container */}
+                <div className="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-8 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                  <div className="max-w-[340px]">
+                    <p className="eyebrow text-[#a43a32]">
+                      {vicar.title}
+                    </p>
+
+                    <h2 className="font-display text-xl sm:text-2xl font-semibold leading-tight mt-1.5 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
+                      {vicar.name}
+                    </h2>
+
+                    <p className="mt-2 text-xs sm:text-[13px] leading-relaxed text-[#524c43]">
+                      {vicar.description}
+                    </p>
+
+                    <div className="mt-4">
+                      <Link
+                        href={vicar.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#a43a32] hover:text-[#78241d] transition-colors group/btn"
+                      >
+                        <span>Read More</span>
+                        <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Image Container */}
+                <div className="relative min-h-[220px] sm:min-h-[240px] w-full overflow-hidden bg-[#ded7c9]">
+                  <Image
+                    src={vicar.image}
+                    alt={`${vicar.name} - ${vicar.title}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

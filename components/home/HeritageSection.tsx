@@ -13,12 +13,28 @@ interface HeritageSectionProps {
 export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
   const historyImages = [
     {
-      src: "/history/Vintage Sepia Church Among Palms.png",
-      alt: "Vintage Sepia Church Among Palms",
+      src: "/history/1.jpg",
+      alt: "Historical Church Parish Gathering",
     },
     {
-      src: "/history/Vintage Sepia Church Sanctuary Panorama.png",
-      alt: "Vintage Sepia Church Sanctuary Panorama",
+      src: "/history/IMG_20240807_000341.jpg",
+      alt: "Parish Historical Archive",
+    },
+    {
+      src: "/history/SKM_C30803062115450_0015.jpg.jpeg",
+      alt: "Historical Documents and Dedication",
+    },
+    {
+      src: "/history/SKM_C30803062115450_0018.jpg.jpeg",
+      alt: "Archival Parish Memories",
+    },
+    {
+      src: "/history/School.jpeg",
+      alt: "Early Sunday School Community",
+    },
+    {
+      src: "/history/ba74b38a-0786-4107-a28a-8a835cf894f2.jpg",
+      alt: "Early Church Fellowship",
     },
   ];
 
@@ -57,7 +73,7 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
             />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#111c20]/100 via-transparent to-transparent" />
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-[#111c20]/100 via-transparent to-transparent" /> */}
       </div>
 
       {/* Content Container attached to right edge */}

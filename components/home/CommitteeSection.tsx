@@ -4,20 +4,43 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 
 interface Member {
   name: string;
+  position: string;
   image: string;
+  isVicar?: boolean;
 }
 
 export default function CommitteeSection() {
   const members: Member[] = [
-    { name: "A M Sunny", image: "/committee-members/A M_Sunny.jpg" },
-    { name: "Jacob Thomas", image: "/committee-members/Jacob_Thomas.jpg" },
-    { name: "Poppy Elizebeth Babu", image: "/committee-members/POPPY_ELIZEBETH_BABU.jpg" },
-    { name: "Biju Varghese", image: "/committee-members/BIJU_VARGHESE2.jpg" },
-    { name: "George Poulose", image: "/committee-members/George_Poulose.jpg" },
+    {
+      name: "Rev. Fr. Eldo",
+      position: "Vicar",
+      image: "/vicar-office-bearers/FrEldo-Vicar.png",
+      isVicar: true,
+    },
+    {
+      name: "M. C. Abraham",
+      position: "Vice President",
+      image: "/vicar-office-bearers/M C Abraham - Vice Resident.png",
+    },
+    {
+      name: "Jobin Jacob",
+      position: "Treasurer",
+      image: "/vicar-office-bearers/Jobin_Jacob-Treasurer.png",
+    },
+    {
+      name: "Jebin Philippose",
+      position: "Secretary",
+      image: "/vicar-office-bearers/Jebin_philippose-Secretary.png",
+    },
+    {
+      name: "Sujamol Biju",
+      position: "Joint Secretary",
+      image: "/vicar-office-bearers/Sujamol_Biju-Jt_Secretary.png",
+    },
   ];
 
   return (
-    <section className="bg-white py-20 lg:py-24 overflow-hidden border-t border-[#071b27]/10">
+    <section className="bg-gray-100 py-20 lg:py-24 overflow-hidden">
       <div className="mx-auto max-w-[1500px] px-8 sm:px-12 lg:px-16">
         {/* Header with Title & View All Link */}
         <ScrollReveal direction="up" duration={800}>
@@ -25,7 +48,7 @@ export default function CommitteeSection() {
             <div>
               <p className="eyebrow text-[#a43a32]">Leadership &amp; Service</p>
               <h2 className="section-title mt-3">
-                Managing <span className="text-[#a43a32]">Committee</span>
+                Vicar &amp; Office <span className="text-[#a43a32]">Bearers</span>
               </h2>
             </div>
 
@@ -38,18 +61,27 @@ export default function CommitteeSection() {
           </div>
         </ScrollReveal>
 
-        {/* 5 Members Static Grid */}
-        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6">
+        {/* 5 Members Grid: Vicar card is made slightly larger with prominent scale/span */}
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6 items-end">
           {members.map((member, idx) => (
             <ScrollReveal
               key={member.name}
               direction="up"
               delay={idx * 100}
               duration={700}
+              className={member.isVicar ? "col-span-2 sm:col-span-1 lg:col-span-1" : ""}
             >
-              <div className="group block">
-                {/* Image Container - Square 1:1 aspect ratio, sharp corners, no shadow */}
-                <div className="relative aspect-square w-full overflow-hidden bg-[#e9e3d7]">
+              <div
+                className={`group block transition-transform duration-300 ${member.isVicar ? "lg:-translate-y-2" : ""
+                  }`}
+              >
+                {/* Image Container - Vicar card has a taller aspect ratio or slightly larger container */}
+                <div
+                  className={`relative w-full overflow-hidden bg-[#e9e3d7] transition-all duration-300 ${member.isVicar
+                    ? "aspect-[4/5]"
+                    : "aspect-square"
+                    }`}
+                >
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -57,13 +89,17 @@ export default function CommitteeSection() {
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Subtle dark gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
                 </div>
 
-                {/* Member Info Below Image */}
+                {/* Member Info Below Image with Position */}
                 <div className="mt-3">
-                  <h3 className="font-display text-base font-semibold text-[#1c1a17] group-hover:text-[#a43a32] transition-colors leading-snug">
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#a43a32]">
+                    {member.position}
+                  </p>
+                  <h3
+                    className={`font-semibold text-[#1c1a17] group-hover:text-[#a43a32] transition-colors leading-snug mt-0.5 ${member.isVicar ? "text-xl sm:text-2xl" : "text-xl"
+                      }`}
+                  >
                     {member.name}
                   </h3>
                 </div>
