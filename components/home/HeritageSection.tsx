@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
-import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 
@@ -54,7 +54,7 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
   ];
 
   return (
-    <section className="relative bg-[#111c20] text-white overflow-hidden">
+    <section className="relative bg-[#111c20] text-white overflow-hidden min-h-[580px] sm:min-h-[640px] lg:min-h-[700px] flex flex-col justify-end">
       {/* Background Image Carousel (Smooth cross-fade, isolated pointer-events-none) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {historyImages.map((img, idx) => (
@@ -73,49 +73,48 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
             />
           </div>
         ))}
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-[#111c20]/100 via-transparent to-transparent" /> */}
       </div>
 
-      {/* Content Container attached to right edge */}
-      <div className="relative z-30 ml-auto flex justify-end pl-6 py-12 sm:py-16 px-12">
+      {/* Content Container aligned to bottom right */}
+      <div className="relative z-30 ml-auto flex justify-end p-6 sm:p-10 lg:p-12">
         <ScrollReveal direction="right" duration={850}>
-          <div className="w-full max-w-[500px] sm:max-w-[540px] bg-[#111c20] p-6 sm:p-9">
-            <p className="eyebrow text-white">Our Heritage</p>
+          <div className="w-full max-w-[440px] sm:max-w-[480px] bg-[#111c20]/75 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-2xl">
+            <p className="eyebrow text-white text-[10px] sm:text-xs">Our Heritage</p>
 
-            <h2 className="section-title mt-4">
+            <h2 className="font-display text-2xl sm:text-3xl font-semibold leading-tight mt-2 text-white">
               From{" "}
-              <span className="text-[#d6b75b]">1994</span>
-              <br />
+              <span className="text-[#d6b75b]">1994</span>{" "}
               onwards.
             </h2>
 
-
-            <p className="mt-6 text-sm leading-7 text-white/85">
+            <p className="mt-3.5 text-xs sm:text-[13px] leading-relaxed text-white/90">
               The Jacobite Syrian Church in Mumbai began its journey in 1994.
               Through decades of prayer, sacrifice and perseverance, the St.
               Gregorios parish grew into the spiritual home it is today.
             </p>
 
-            <div className="mt-4 grid grid-cols-2 py-3">
+            <div className="mt-3.5 grid grid-cols-2 py-2.5 border-y border-white/10 my-3.5">
               {milestones.map((milestone) => (
                 <div key={`${milestone.year}-${milestone.label}`}>
-                  <p className="font-display text-5xl text-[#d6b75b]">
+                  <p className="font-display text-3xl sm:text-4xl font-semibold text-[#d6b75b]">
                     {milestone.year}
                   </p>
-                  <p className="mt-1.5 text-sm tracking-[0.14em] text-white/70">
+                  <p className="mt-1 text-xs tracking-[0.14em] text-white/80">
                     {milestone.label}
                   </p>
                 </div>
               ))}
             </div>
 
-            <Button
-              href="/history"
-              variant="secondary"
-              className="mt-7"
-            >
-              Explore our history
-            </Button>
+            <div className="mt-5">
+              <Link
+                href="/history"
+                className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#d6b75b] hover:text-white transition-colors group/btn"
+              >
+                <span>Read More</span>
+                <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+              </Link>
+            </div>
           </div>
         </ScrollReveal>
       </div>
