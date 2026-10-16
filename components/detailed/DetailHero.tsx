@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
@@ -12,6 +13,10 @@ interface DetailHeroProps {
   verseCitation?: string;
   imageSrc?: string;
   images?: string[];
+  backLink?: {
+    href: string;
+    label: string;
+  };
 }
 
 export default function DetailHero({
@@ -22,6 +27,7 @@ export default function DetailHero({
   verseCitation,
   imageSrc,
   images,
+  backLink,
 }: DetailHeroProps) {
   // Normalize images list: use provided images array, or single imageSrc fallback
   const heroImages =
@@ -98,6 +104,27 @@ export default function DetailHero({
 
           <ScrollReveal direction="left" duration={850} className="relative z-10">
             <div className="max-w-[620px]">
+              {/* Back Link Button (if provided) */}
+              {backLink && (
+                <div className="mb-6">
+                  <Link
+                    href={backLink.href}
+                    className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-white/70 hover:text-[#d6b75b] transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span>{backLink.label}</span>
+                  </Link>
+                </div>
+              )}
+
               {/* Header Badge */}
               <div className="mb-5 flex items-center gap-3">
                 <span className="eyebrow text-[#d6b75b] leading-tight">

@@ -60,11 +60,10 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
       {/* 1. Detail Hero Section with Split Layout & Auto Carousel */}
       <DetailHero
-        eyebrow={article.eyebrow || `${article.category} · ${article.date}`}
+        backLink={{ href: "/news", label: "Back to News" }}
+        eyebrow={article.category}
         title={article.title}
         subtitle={article.date}
-        verseQuote={article.verseQuote}
-        verseCitation={article.verseCitation}
         imageSrc={article.image}
         images={article.heroImages && article.heroImages.length > 0 ? article.heroImages : [article.image]}
       />
@@ -91,7 +90,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
       )}
 
       {/* 4. More News & Chronicles Section */}
-      <section className="relative py-20 bg-[#efe9dd] border-t border-[#171715]/10">
+      <section className="relative py-20 bg-[#efe9dd]">
         <div className="mx-auto max-w-[1400px] px-8 sm:px-12 lg:px-16">
           <ScrollReveal direction="up" duration={700}>
             <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
