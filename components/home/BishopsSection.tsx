@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 interface Bishop {
@@ -18,7 +19,7 @@ export default function BishopsSection() {
       image: "/bishops/Baselious Joseph2.png",
       description:
         "Providing spiritual shepherdship and archpastoral guidance to the Jacobite Syrian Christian community.",
-      link: "/about/catholicos",
+      link: "/catholicos",
     },
     {
       name: "Mor Eusebius Kuriakose",
@@ -26,7 +27,7 @@ export default function BishopsSection() {
       image: "/bishops/Mor Eusebius-Kuriakose.jpg",
       description:
         "Guiding our diocese with apostolic vision, pastoral care, and dedication to Gospel service.",
-      link: "/about/metropolitan",
+      link: "/metropolitan",
     },
   ];
 
@@ -36,7 +37,7 @@ export default function BishopsSection() {
     image: "/vicar/FrEldo-Vicar.png",
     description:
       "Administering the parish sacramental life, spiritual counseling, and ministering to all families of St. Gregorios Church.",
-    link: "/about/vicar",
+    link: "/vicar",
   };
 
   return (
@@ -98,7 +99,61 @@ export default function BishopsSection() {
           </div>
         </ScrollReveal>
 
-        {/* Bento Grid: Catholicos on the Left (Full Height / Prominent), Metropolitan & Vicar Stacked on the Right */}
+        {/* Patriarch Feature Card (Universal Syriac Orthodox Church) */}
+        <div className="mb-12 lg:mb-12 bg-[#e9e3d7] overflow-hidden">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] items-stretch">
+            {/* Content Container (Left Side) */}
+            <div className="flex items-center px-7 py-16 sm:px-12 lg:px-16 xl:px-20">
+              <ScrollReveal direction="left" duration={850}>
+                <div className="max-w-[650px]">
+                  <p className="eyebrow text-[#a43a32]">
+                    The Universal Syriac Orthodox Church
+                  </p>
+
+                  <h2 className="section-title mt-4">
+                    His Holiness
+                    <br />
+                    Moran Mor
+                    <br />
+                    <span className="text-[#a43a32]">Ignatius Aphrem II</span>
+                  </h2>
+
+                  <p className="mt-5 text-xs font-semibold tracking-[0.15em] text-[#4d4840]">
+                    Patriarch of Antioch and All the East
+                  </p>
+
+                  <p className="mt-6 text-[15px] leading-relaxed text-[#3d3932]">
+                    Spiritual father of the Syriac Orthodox faithful throughout the
+                    world, His Holiness continues the ancient Apostolic ministry of
+                    the See of Antioch, guiding the Church in faith, worship, unity
+                    and service.
+                  </p>
+
+                  <Button href="/patriarch" variant="black" className="mt-8">
+                    Read his story
+                  </Button>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Image Container (Right Side) */}
+            <ScrollReveal direction="right" delay={200} duration={850} className="h-full w-full flex items-center justify-end">
+              <div className="relative aspect-square w-full h-full min-h-[340px] sm:min-h-[420px] overflow-hidden">
+                <Image
+                  src="/moran-mor-ignatius-Aphrem/His-Holiness-Moran-Mor-Ignatius-Aphrem-II-2.png"
+                  alt="His Holiness Moran Mor Ignatius Aphrem II"
+                  fill
+                  priority
+                  className="object-cover grayscale-[15%]"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+                <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[#e9e3d7] via-[#e9e3d7]/40 to-transparent pointer-events-none" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+
+        {/* Bento Grid*/}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Left Column (Catholicos of the East - Large Prominent Card) */}
           <ScrollReveal
@@ -107,7 +162,7 @@ export default function BishopsSection() {
             duration={850}
             className="lg:col-span-6 h-full"
           >
-            <div className="group relative overflow-hidden h-full min-h-[420px] sm:min-h-[480px] lg:min-h-full transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col justify-end bg-[#1c1a17]">
+            <div className="group relative overflow-hidden h-full min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col justify-end bg-[#1c1a17]">
               {/* Full Bleed Background Image */}
               <div className="absolute inset-0 w-full h-full">
                 <Image
@@ -124,8 +179,8 @@ export default function BishopsSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 via-45% to-transparent pointer-events-none" />
 
               {/* Content Container placed at the bottom over gradient */}
-              <div className="relative z-10 p-6 sm:p-8 lg:p-9 transition-transform duration-500 ease-out group-hover:translate-x-1">
-                <div className="max-w-[360px]">
+              <div className="relative z-10 p-6 sm:p-8 lg:p-10 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <div className="max-w-[400px]">
                   <p className="eyebrow text-white">
                     {bishops[0].title}
                   </p>
@@ -154,25 +209,25 @@ export default function BishopsSection() {
 
           {/* Right Column: Stacked Bento Cards (Metropolitan on Top, Vicar Below) */}
           <div className="lg:col-span-6 flex flex-col gap-6 lg:gap-8">
-            {/* Top Right: Metropolitan */}
-            <ScrollReveal direction="right" delay={300} duration={850} className="flex-1">
-              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
+            {/* Top Right: Metropolitan (Increased Height / Prominent) */}
+            <ScrollReveal direction="right" delay={300} duration={850} className="flex-[1.25]">
+              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full min-h-[340px] sm:min-h-[390px] transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
                 {/* Content Container */}
-                <div className="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-8 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <div className="flex flex-col justify-center px-6 py-9 sm:px-8 sm:py-10 transition-transform duration-500 ease-out group-hover:translate-x-1">
                   <div className="max-w-[340px]">
                     <p className="eyebrow text-[#a43a32]">
                       {bishops[1].title}
                     </p>
 
-                    <h2 className="font-display text-xl sm:text-2xl font-semibold leading-tight mt-1.5 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
+                    <h2 className="font-display text-xl sm:text-3xl font-semibold leading-tight mt-1.5 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
                       {bishops[1].name}
                     </h2>
 
-                    <p className="mt-2 text-xs sm:text-[13px] leading-relaxed text-[#524c43]">
+                    <p className="mt-2.5 text-xs sm:text-[13px] leading-relaxed text-[#524c43]">
                       {bishops[1].description}
                     </p>
 
-                    <div className="mt-4">
+                    <div className="mt-5">
                       <Link
                         href={bishops[1].link || "/about"}
                         className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#a43a32] hover:text-[#78241d] transition-colors group/btn"
@@ -185,7 +240,7 @@ export default function BishopsSection() {
                 </div>
 
                 {/* Image Container */}
-                <div className="relative min-h-[220px] sm:min-h-[240px] w-full overflow-hidden bg-[#ded7c9]">
+                <div className="relative min-h-[320px] sm:min-h-[380px] w-full overflow-hidden bg-[#ded7c9]">
                   <Image
                     src={bishops[1].image}
                     alt={bishops[1].name}
@@ -197,25 +252,25 @@ export default function BishopsSection() {
               </div>
             </ScrollReveal>
 
-            {/* Bottom Right: Vicar */}
-            <ScrollReveal direction="right" delay={450} duration={850} className="flex-1">
-              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
+            {/* Bottom Right: Vicar (Reduced Height / Compact) */}
+            <ScrollReveal direction="right" delay={450} duration={850} className="flex-[0.75]">
+              <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full min-h-[220px] sm:min-h-[250px] transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
                 {/* Content Container */}
-                <div className="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-8 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <div className="flex flex-col justify-center px-6 py-5 sm:px-8 sm:py-6 transition-transform duration-500 ease-out group-hover:translate-x-1">
                   <div className="max-w-[340px]">
                     <p className="eyebrow text-[#a43a32]">
                       {vicar.title}
                     </p>
 
-                    <h2 className="font-display text-xl sm:text-2xl font-semibold leading-tight mt-1.5 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
+                    <h2 className="font-display text-lg sm:text-2xl font-semibold leading-tight mt-1 text-[#1c1a17] transition-colors duration-300 group-hover:text-[#8a2f28]">
                       {vicar.name}
                     </h2>
 
-                    <p className="mt-2 text-xs sm:text-[13px] leading-relaxed text-[#524c43]">
+                    <p className="mt-1.5 text-xs sm:text-[13px] leading-relaxed text-[#524c43] line-clamp-2 sm:line-clamp-none">
                       {vicar.description}
                     </p>
 
-                    <div className="mt-4">
+                    <div className="mt-3.5">
                       <Link
                         href={vicar.link}
                         className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#a43a32] hover:text-[#78241d] transition-colors group/btn"
@@ -228,7 +283,7 @@ export default function BishopsSection() {
                 </div>
 
                 {/* Image Container */}
-                <div className="relative min-h-[220px] sm:min-h-[240px] w-full overflow-hidden bg-[#ded7c9]">
+                <div className="relative min-h-[200px] sm:min-h-[230px] w-full overflow-hidden bg-[#ded7c9]">
                   <Image
                     src={vicar.image}
                     alt={`${vicar.name} - ${vicar.title}`}

@@ -2,10 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import MegaMenu from "@/components/global/MegaMenu";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -29,21 +32,25 @@ export default function Header() {
   }, []);
 
   const isSolidHeader = scrolled || menuOpen;
+  // On home page, logo is hidden when on hero (top) and appears on scroll or when menu opens. On other pages, logo is always visible.
+  const isLogoVisible = isHomePage ? isSolidHeader : true;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${isSolidHeader
-        ? "bg-[#071b27] shadow-xl"
-        : "bg-transparent border-b border-transparent shadow-none"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        isSolidHeader
+          ? "bg-[#071b27] shadow-xl"
+          : "bg-transparent border-b border-transparent shadow-none"
+      }`}
     >
       {/* Top Header Bar */}
       <div className="relative mx-auto flex max-w-[1600px] items-center justify-between px-5 sm:px-8 py-3.5">
-        {/* Church Logo & Branding (Hidden when over Hero, shown when scrolled or menu open) */}
+        {/* Church Logo & Branding (Hidden only over Home Hero section, visible on other pages and on scroll) */}
         <Link
           href="/"
-          className={`group flex items-center gap-3.5 transition-opacity duration-300 ${isSolidHeader ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-            }`}
+          className={`group flex items-center gap-3.5 transition-opacity duration-300 ${
+            isLogoVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         >
           <Image
             src="/logo/logo.png"

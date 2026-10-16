@@ -80,20 +80,19 @@ export default function HeroSection({
 
       {/* St. Gregorios PNG aligned to right edge with entrance slide-up */}
       <div
-        className={`absolute bottom-0 right-0 z-10 hidden md:block max-w-[28vw] lg:max-w-[360px] xl:max-w-[400px] pointer-events-none transition-all duration-1200 delay-400 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+        className={`absolute bottom-0 right-0 z-10 hidden md:block w-[28vw] max-w-[360px] xl:max-w-[400px] pointer-events-none transition-all duration-1200 delay-400 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
           }`}
       >
-        <Image
-          src="/st-gregorios/st-gregorios.png"
-          alt="St. Gregorios"
-          width={400}
-          height={500}
-          priority
-          sizes="(max-width: 768px) 100vw, 400px"
-          style={{ width: "auto", height: "auto" }}
-          className="max-w-full h-auto object-contain object-bottom drop-shadow-2xl"
-        />
-
+        <div className="relative w-full aspect-[1109/1418]">
+          <Image
+            src="/st-gregorios/st-gregorios.png"
+            alt="St. Gregorios"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 400px"
+            className="object-contain object-bottom drop-shadow-2xl"
+          />
+        </div>
       </div>
     </section>
   );

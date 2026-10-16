@@ -5,7 +5,6 @@ import WorshipBar from "@/components/home/WorshipBar";
 import WelcomeSection from "@/components/home/WelcomeSection";
 import FeastSection from "@/components/home/FeastSection";
 import HeritageSection from "@/components/home/HeritageSection";
-import PatriarchSection from "@/components/home/PatriarchSection";
 import BishopsSection from "@/components/home/BishopsSection";
 import NewsSection from "@/components/home/NewsSection";
 import CommitteeSection from "@/components/home/CommitteeSection";
@@ -20,7 +19,6 @@ export default function Home() {
       <WelcomeSection />
       <FeastSection />
       <HeritageSection />
-      <PatriarchSection />
       <BishopsSection />
       <NewsSection />
       <CommitteeSection />

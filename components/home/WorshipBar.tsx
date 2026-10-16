@@ -67,14 +67,15 @@ export default function WorshipBar() {
 
               {/* Background Design Element: Church Shadow at bottom */}
               <div className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-6 opacity-90 flex justify-end w-[65vw] sm:w-[50vw] max-w-[850px] lg:max-w-[1100px] z-10">
-                <Image
-                  src="/design-elm/chirch-shadow-red.png"
-                  alt="Church Silhouette"
-                  width={700}
-                  height={220}
-                  style={{ width: "auto", height: "auto" }}
-                  className="max-w-full h-auto object-bottom object-right object-contain brightness-0 pointer-events-none"
-                />
+                <div className="relative w-full aspect-[2366/463]">
+                  <Image
+                    src="/design-elm/chirch-shadow-red.png"
+                    alt="Church Silhouette"
+                    fill
+                    sizes="(max-width: 1024px) 65vw, 1100px"
+                    className="object-bottom object-right object-contain brightness-0 pointer-events-none"
+                  />
+                </div>
               </div>
             </div>
 

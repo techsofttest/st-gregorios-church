@@ -19,28 +19,30 @@ export default function Footer() {
     <footer className="relative bg-[#e9e3d7] px-8 sm:px-12 lg:px-16 pt-16 pb-12 text-[#0c0e10]">
       {/* Overlapping St. Gregorios Image on Left Side */}
       <div className="absolute top-0 left-4 hidden lg:block w-[32vw] max-w-[420px] pointer-events-none z-30 -translate-y-28 xl:-translate-y-36">
-        <Image
-          src="/st-gregorios/st-gregorios-b.png"
-          alt="St. Gregorios of Parumala"
-          width={420}
-          height={600}
-          style={{ width: "auto", height: "auto" }}
-          className="max-w-full h-auto object-contain object-top"
-          priority
-        />
+        <div className="relative w-full aspect-[1109/1418]">
+          <Image
+            src="/st-gregorios/st-gregorios-b.png"
+            alt="St. Gregorios of Parumala"
+            fill
+            sizes="(max-width: 1024px) 32vw, 420px"
+            className="object-contain object-top"
+            priority
+          />
+        </div>
       </div>
 
 
       {/* Background Graphic: Church Shadow Red at Bottom Right */}
-      <div className="absolute bottom-0 right-0 pointer-events-none opacity-40 flex justify-end max-w-[50vw] lg:max-w-[650px] z-0">
-        <Image
-          src="/design-elm/chirch-shadow-red.png"
-          alt="Church Silhouette"
-          width={650}
-          height={200}
-          style={{ width: "auto", height: "auto" }}
-          className="max-w-full h-auto object-bottom object-right object-contain"
-        />
+      <div className="absolute bottom-0 right-0 pointer-events-none opacity-40 flex justify-end w-[50vw] max-w-[650px] z-0">
+        <div className="relative w-full aspect-[2366/463]">
+          <Image
+            src="/design-elm/chirch-shadow-red.png"
+            alt="Church Silhouette"
+            fill
+            sizes="(max-width: 1024px) 50vw, 650px"
+            className="object-bottom object-right object-contain"
+          />
+        </div>
       </div>
 
 

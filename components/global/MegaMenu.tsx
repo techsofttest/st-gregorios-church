@@ -17,10 +17,10 @@ export const megaMenuCategories: MenuCategory[] = [
   {
     title: "ABOUT US",
     items: [
-      { label: "Church History", href: "/about#history" },
-      { label: "Patron Saint (St. Gregorios)", href: "/about#patron-saint" },
+      { label: "Our Parish", href: "/about" },
+      { label: "Church History", href: "/history" },
+      { label: "Feast of St. Gregorios", href: "/feast" },
       { label: "Vision & Mission", href: "/about#vision" },
-      { label: "Our Faith", href: "/about#faith" },
     ],
   },
   {
@@ -69,9 +69,9 @@ export const megaMenuCategories: MenuCategory[] = [
   {
     title: "NEWS & ANNOUNCEMENTS",
     items: [
-      { label: "Latest News", href: "#news" },
-      { label: "Parish announcements", href: "#notices" },
-      { label: "Newsletter", href: "#newsletter" },
+      { label: "Latest News", href: "/news" },
+      { label: "Parish announcements", href: "/news" },
+      { label: "Newsletter", href: "/news" },
     ],
   },
   {
