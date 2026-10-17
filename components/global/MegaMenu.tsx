@@ -97,6 +97,15 @@ export const megaMenuCategories: MenuCategory[] = [
   //   ],
   // },
   {
+    title: "SUPPORT & DONATIONS",
+    items: [
+      { label: "Educational Aid", href: "/donations" },
+      { label: "Bhavana Nirmanam (Housing)", href: "/donations" },
+      { label: "Elder Care", href: "/donations" },
+      { label: "Charity & Medical Relief", href: "/donations" },
+    ],
+  },
+  {
     title: "CONTACT US",
     items: [
       { label: "Contact Information", href: "/contact#info" },
