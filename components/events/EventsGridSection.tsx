@@ -100,11 +100,10 @@ export default function EventsGridSection({ items }: EventsGridSectionProps) {
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`flex-shrink-0 whitespace-nowrap px-4 py-2.5 text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-[#a43a32] text-white shadow-sm"
-                    : "bg-[#f2eee6] text-[#4d473d] hover:bg-[#e6dfd3]"
-                }`}
+                className={`flex-shrink-0 whitespace-nowrap px-4 py-2.5 text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer ${selectedCategory === cat
+                  ? "bg-[#a43a32] text-white shadow-sm"
+                  : "bg-[#f2eee6] text-[#4d473d] hover:bg-[#e6dfd3]"
+                  }`}
               >
                 {cat}
               </button>
@@ -121,7 +120,7 @@ export default function EventsGridSection({ items }: EventsGridSectionProps) {
         </div>
 
         {/* Events Grid */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredEvents.map((item, index) => (
             <ScrollReveal
               key={item.id}

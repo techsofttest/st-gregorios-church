@@ -18,6 +18,17 @@ export default function PrayerModal({ isOpen, onClose }: PrayerModalProps) {
   const [requestText, setRequestText] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Track viewport width for responsive mobile/desktop image swap (<768px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Close on Escape key press & prevent body scroll
   useEffect(() => {
@@ -84,10 +95,11 @@ export default function PrayerModal({ isOpen, onClose }: PrayerModalProps) {
           </svg>
         </button>
 
-        {/* Left Column: Pure Image (No text over image) */}
+        {/* Left Column: Pure Image (st-gregorios-l.png on mobile under 768px, st-gregorios2.png on desktop) */}
         <div className="relative w-full md:w-5/12 h-48 sm:h-56 md:h-auto min-h-[220px] md:min-h-full flex-shrink-0 bg-[#071b27]">
           <Image
-            src="/st-gregorios/st-gregorios2.png"
+            key={isMobile ? "mobile" : "desktop"}
+            src={isMobile ? "/st-gregorios/st-gregorios-l.png" : "/st-gregorios/st-gregorios2.png"}
             alt="Candlelit Altar Shrine"
             fill
             priority

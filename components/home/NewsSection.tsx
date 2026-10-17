@@ -30,7 +30,7 @@ export default function NewsSection() {
           </div>
         </ScrollReveal>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {homeNews.map((item, index) => (
             <ScrollReveal key={item.id} direction="up" delay={index * 100} duration={650}>
               <NewsCard item={item} />

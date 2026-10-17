@@ -22,14 +22,24 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mega menu on Escape key press
+  // Close mega menu on Escape key press and manage body scroll lock on mobile
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const isSolidHeader = scrolled || menuOpen;
   // On home page, logo is hidden when on hero (top) and appears on scroll or when menu opens. On other pages, logo is always visible.
@@ -44,11 +54,12 @@ export default function Header() {
       }`}
     >
       {/* Top Header Bar */}
-      <div className="relative mx-auto flex max-w-[1600px] items-center justify-between px-5 sm:px-8 py-3.5">
+      <div className="relative mx-auto flex max-w-[1600px] items-center justify-between px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3.5">
         {/* Church Logo & Branding (Hidden only over Home Hero section, visible on other pages and on scroll) */}
         <Link
           href="/"
-          className={`group flex items-center gap-3.5 transition-opacity duration-300 ${
+          onClick={() => setMenuOpen(false)}
+          className={`group flex items-center gap-2 sm:gap-3.5 transition-opacity duration-300 min-w-0 pr-2 ${
             isLogoVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         >
@@ -57,24 +68,24 @@ export default function Header() {
             alt="St. Gregorios Logo"
             width={48}
             height={48}
-            className="h-10 w-10 sm:h-12 sm:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-8 w-8 sm:h-11 sm:w-11 lg:h-12 lg:w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
           />
-          <div>
-            <div className="font-display text-lg sm:text-2xl font-bold tracking-wide text-white group-hover:text-[#d6b75b] transition-colors leading-tight">
+          <div className="min-w-0">
+            <div className="font-display text-base sm:text-xl lg:text-2xl font-bold tracking-wide text-white group-hover:text-[#d6b75b] transition-colors leading-tight truncate">
               St. Gregorios
             </div>
-            <div className="text-[11px] sm:text-xs font-medium text-white/80 tracking-wide">
+            <div className="text-[10px] sm:text-xs font-medium text-white/80 tracking-wide truncate max-w-[170px] sm:max-w-none">
               Jacobite Syrian Orthodox Church
             </div>
           </div>
         </Link>
 
-        {/* Centered Christian Orthodox Cross SVG */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none flex items-center justify-center">
+        {/* Centered Christian Orthodox Cross SVG - Hidden on mobile/tablet to avoid collision with branding & button */}
+        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 40 52"
-            className="h-7 w-7 sm:h-9 sm:w-9 text-[#d6b75b]"
+            className="h-7 w-7 lg:h-9 lg:w-9 text-[#d6b75b]"
             fill="currentColor"
             aria-label="Christian Orthodox Cross"
           >
@@ -98,32 +109,42 @@ export default function Header() {
           </svg>
         </div>
 
-
-
         {/* Quick Top Bar Navigation / Menu Trigger */}
-        <div className="flex items-center gap-3 sm:gap-6 ml-auto">
+        <div className="flex items-center gap-2 sm:gap-4 ml-auto shrink-0">
           <button
             type="button"
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-expanded={menuOpen}
             aria-label="Toggle Navigation Menu"
-            className="group inline-flex items-center gap-2.5 rounded-none bg-[#a53c33] px-4 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold tracking-wider uppercase text-white hover:bg-[#d6a738] transition-colors cursor-pointer border border-white/10 shadow-lg"
+            className="group inline-flex items-center gap-2 sm:gap-2.5 rounded-none bg-[#a53c33] px-3 py-2 sm:px-5 sm:py-2.5 lg:px-6 lg:py-3 text-[11px] sm:text-xs lg:text-sm font-semibold tracking-wider uppercase text-white hover:bg-[#8f322b] transition-colors cursor-pointer border border-white/10 shadow-lg active:scale-95"
           >
-            <span className="relative block h-4 w-5">
+            <span className="relative block h-3.5 w-4 sm:h-4 sm:w-5 shrink-0">
               <span
-                className={`absolute left-0 top-0 block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[7px] rotate-45" : ""
-                  }`}
+                className={`absolute left-0 top-0 block h-[2px] w-full bg-white transition-all duration-300 ${
+                  menuOpen ? "top-[6px] sm:top-[7px] rotate-45" : ""
+                }`}
               />
               <span
-                className={`absolute left-0 top-[7px] block h-[2px] w-4/5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""
-                  }`}
+                className={`absolute left-0 top-[6px] sm:top-[7px] block h-[2px] w-4/5 bg-white transition-all duration-300 ${
+                  menuOpen ? "opacity-0" : ""
+                }`}
               />
               <span
-                className={`absolute left-0 top-[14px] block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[7px] -rotate-45" : ""
-                  }`}
+                className={`absolute left-0 top-[12px] sm:top-[14px] block h-[2px] w-full bg-white transition-all duration-300 ${
+                  menuOpen ? "top-[6px] sm:top-[7px] -rotate-45" : ""
+                }`}
               />
             </span>
-            <span>{menuOpen ? "Close Menu" : "Menu & Directory"}</span>
+            <span className="whitespace-nowrap">
+              {menuOpen ? (
+                "Close"
+              ) : (
+                <>
+                  <span className="sm:hidden">Menu</span>
+                  <span className="hidden sm:inline">Menu &amp; Directory</span>
+                </>
+              )}
+            </span>
           </button>
         </div>
       </div>

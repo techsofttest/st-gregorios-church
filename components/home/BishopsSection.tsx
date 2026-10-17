@@ -101,9 +101,25 @@ export default function BishopsSection() {
 
         {/* Patriarch Feature Card (Universal Syriac Orthodox Church) */}
         <div className="mb-12 lg:mb-12 bg-[#e9e3d7] overflow-hidden">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] items-stretch">
-            {/* Content Container (Left Side) */}
-            <div className="flex items-center px-7 py-16 sm:px-12 lg:px-16 xl:px-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] items-stretch">
+            {/* Image Container (Top on mobile, Right Side on lg) */}
+            <ScrollReveal direction="right" delay={200} duration={850} className="order-1 lg:order-2 h-full w-full flex items-center justify-end">
+              <div className="relative aspect-4/3 sm:aspect-square w-full h-full min-h-[280px] sm:min-h-[420px] overflow-hidden">
+                <Image
+                  src="/moran-mor-ignatius-Aphrem/His-Holiness-Moran-Mor-Ignatius-Aphrem-II-2.png"
+                  alt="His Holiness Moran Mor Ignatius Aphrem II"
+                  fill
+                  priority
+                  className="object-cover grayscale-[15%]"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+                <div className="hidden lg:block absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[#e9e3d7] via-[#e9e3d7]/40 to-transparent pointer-events-none" />
+                <div className="lg:hidden absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#e9e3d7] to-transparent pointer-events-none" />
+              </div>
+            </ScrollReveal>
+
+            {/* Content Container (Bottom on mobile, Left Side on lg) */}
+            <div className="order-2 lg:order-1 flex items-center px-6 py-10 sm:px-12 sm:py-16 lg:px-16 xl:px-20">
               <ScrollReveal direction="left" duration={850}>
                 <div className="max-w-[650px]">
                   <p className="eyebrow text-[#a43a32]">
@@ -135,21 +151,6 @@ export default function BishopsSection() {
                 </div>
               </ScrollReveal>
             </div>
-
-            {/* Image Container (Right Side) */}
-            <ScrollReveal direction="right" delay={200} duration={850} className="h-full w-full flex items-center justify-end">
-              <div className="relative aspect-square w-full h-full min-h-[340px] sm:min-h-[420px] overflow-hidden">
-                <Image
-                  src="/moran-mor-ignatius-Aphrem/His-Holiness-Moran-Mor-Ignatius-Aphrem-II-2.png"
-                  alt="His Holiness Moran Mor Ignatius Aphrem II"
-                  fill
-                  priority
-                  className="object-cover grayscale-[15%]"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-                <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[#e9e3d7] via-[#e9e3d7]/40 to-transparent pointer-events-none" />
-              </div>
-            </ScrollReveal>
           </div>
         </div>
 
@@ -162,7 +163,7 @@ export default function BishopsSection() {
             duration={850}
             className="lg:col-span-6 h-full"
           >
-            <div className="group relative overflow-hidden h-full min-h-[540px] sm:min-h-[620px] lg:min-h-[680px] transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col justify-end bg-[#1c1a17]">
+            <div className="group relative overflow-hidden h-full min-h-[500px] sm:min-h-[620px] lg:min-h-[680px] transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col justify-end bg-[#1c1a17]">
               {/* Full Bleed Background Image */}
               <div className="absolute inset-0 w-full h-full">
                 <Image
@@ -212,8 +213,19 @@ export default function BishopsSection() {
             {/* Top Right: Metropolitan (Increased Height / Prominent) */}
             <ScrollReveal direction="right" delay={300} duration={850} className="flex-[1.25]">
               <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full min-h-[340px] sm:min-h-[390px] transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
-                {/* Content Container */}
-                <div className="flex flex-col justify-center px-6 py-9 sm:px-8 sm:py-10 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                {/* Image Container (Top on mobile, Right on sm and up) */}
+                <div className="order-1 sm:order-2 relative aspect-4/3 sm:aspect-auto min-h-[260px] sm:min-h-[380px] w-full overflow-hidden bg-[#ded7c9]">
+                  <Image
+                    src={bishops[1].image}
+                    alt={bishops[1].name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content Container (Bottom on mobile, Left on sm and up) */}
+                <div className="order-2 sm:order-1 flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-10 transition-transform duration-500 ease-out group-hover:translate-x-1">
                   <div className="max-w-[340px]">
                     <p className="eyebrow text-[#a43a32]">
                       {bishops[1].title}
@@ -238,25 +250,25 @@ export default function BishopsSection() {
                     </div>
                   </div>
                 </div>
-
-                {/* Image Container */}
-                <div className="relative min-h-[320px] sm:min-h-[380px] w-full overflow-hidden bg-[#ded7c9]">
-                  <Image
-                    src={bishops[1].image}
-                    alt={bishops[1].name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                </div>
               </div>
             </ScrollReveal>
 
             {/* Bottom Right: Vicar (Reduced Height / Compact) */}
             <ScrollReveal direction="right" delay={450} duration={850} className="flex-[0.75]">
               <div className="group grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] bg-[#e9e3d7] hover:bg-[#ede8de] overflow-hidden h-full min-h-[220px] sm:min-h-[250px] transition-all duration-500 ease-out hover:shadow-xl hover:-translate-y-1.5">
-                {/* Content Container */}
-                <div className="flex flex-col justify-center px-6 py-5 sm:px-8 sm:py-6 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                {/* Image Container (Top on mobile, Right on sm and up) */}
+                <div className="order-1 sm:order-2 relative aspect-4/3 sm:aspect-auto min-h-[200px] sm:min-h-[230px] w-full overflow-hidden bg-[#ded7c9]">
+                  <Image
+                    src={vicar.image}
+                    alt={`${vicar.name} - ${vicar.title}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content Container (Bottom on mobile, Left on sm and up) */}
+                <div className="order-2 sm:order-1 flex flex-col justify-center px-6 py-5 sm:px-8 sm:py-6 transition-transform duration-500 ease-out group-hover:translate-x-1">
                   <div className="max-w-[340px]">
                     <p className="eyebrow text-[#a43a32]">
                       {vicar.title}
@@ -280,17 +292,6 @@ export default function BishopsSection() {
                       </Link>
                     </div>
                   </div>
-                </div>
-
-                {/* Image Container */}
-                <div className="relative min-h-[200px] sm:min-h-[230px] w-full overflow-hidden bg-[#ded7c9]">
-                  <Image
-                    src={vicar.image}
-                    alt={`${vicar.name} - ${vicar.title}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover object-top filter contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
                 </div>
               </div>
             </ScrollReveal>

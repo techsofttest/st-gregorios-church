@@ -99,11 +99,10 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
               <button
                 key={tab.value}
                 onClick={() => setActiveTab(tab.value)}
-                className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer ${
-                  activeTab === tab.value
-                    ? "bg-[#a43a32] text-white shadow-sm"
-                    : "bg-white text-[#3d3a34] border border-[#171715]/10 hover:border-[#a43a32] hover:text-[#a43a32]"
-                }`}
+                className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 rounded-none cursor-pointer ${activeTab === tab.value
+                  ? "bg-[#a43a32] text-white shadow-sm"
+                  : "bg-white text-[#3d3a34] border border-[#171715]/10 hover:border-[#a43a32] hover:text-[#a43a32]"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -115,7 +114,7 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
             TABS CONTENT: PHOTO / FEAST / HISTORICAL (Using DetailGallerySection card design)
         -------------------------------------------------------------- */}
         {activeTab !== "video" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 py-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 py-4">
             {currentItems.map((item, idx) => {
               const tiltConfig = cardTilts[idx % cardTilts.length];
 
@@ -168,7 +167,7 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
                               {item.date}
                             </span>
                           )}
-                          <h4 className="font-display text-sm sm:text-base font-semibold text-white line-clamp-2">
+                          <h4 className="font-sans text-xs sm:text-sm font-semibold text-white line-clamp-2">
                             {item.title}
                           </h4>
                         </div>
@@ -182,10 +181,10 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
         )}
 
         {/* -------------------------------------------------------------
-            VIDEO GALLERY TAB: Video Cards with Play Overlay & Lightbox
+            VIDEO GALLERY TAB
         -------------------------------------------------------------- */}
         {activeTab === "video" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 py-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 py-4">
             {currentItems.map((item, idx) => {
               const tiltConfig = cardTilts[idx % cardTilts.length];
 
@@ -204,26 +203,28 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
                     <div className="absolute inset-0 bg-[#e7dfcf] rotate-1 rounded-sm translate-y-2 translate-x-1.5 -z-10 transition-transform duration-500 group-hover:rotate-0" />
 
                     <div
-                      className={`relative bg-white p-2.5 sm:p-3 shadow-md border border-black/5 ${tiltConfig.rotate} ${tiltConfig.hoverRotate} transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.04]`}
+                      className={`relative bg-white p-2 sm:p-2.5 md:p-3 shadow-md border border-black/5 ${tiltConfig.rotate} ${tiltConfig.hoverRotate} transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.04]`}
                     >
-                      <div className="relative aspect-video sm:aspect-square w-full overflow-hidden bg-[#0c2433]">
+                      <div className="relative aspect-square w-full overflow-hidden bg-[#0c2433]">
                         <Image
                           src={item.src}
                           alt={item.title}
                           fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 transition-opacity duration-300 group-hover:opacity-95" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent opacity-85 transition-opacity duration-300 group-hover:opacity-95" />
 
-                        {/* Centered Glowing Red Play Button */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="h-12 w-12 rounded-full bg-[#a43a32] text-white flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110">
+
+
+                        {/* Centered Play Button (Responsive sizing so it doesn't collide with text) */}
+                        <div className="absolute inset-0 flex items-center justify-center pb-7 sm:pb-8">
+                          <div className="h-8 w-8 sm:h-11 sm:w-11 rounded-full bg-[#a43a32] text-white flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
                               viewBox="0 0 24 24"
-                              className="w-5 h-5 ml-0.5"
+                              className="w-3.5 h-3.5 sm:w-5 sm:h-5 ml-0.5"
                             >
                               <path d="M8 5v14l11-7z" />
                             </svg>
@@ -231,13 +232,13 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
                         </div>
 
                         {/* Title caption overlay */}
-                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                        <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 text-white">
                           {item.date && (
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-[#f0d984] block mb-0.5">
+                            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider sm:tracking-widest text-[#f0d984] block mb-0.5">
                               {item.date}
                             </span>
                           )}
-                          <h4 className="font-display text-sm sm:text-base font-semibold text-white line-clamp-2">
+                          <h4 className="font-sans text-[11px] sm:text-xs md:text-sm font-semibold text-white line-clamp-2 leading-tight">
                             {item.title}
                           </h4>
                         </div>
@@ -361,7 +362,7 @@ export default function GalleryGridSection({ items }: GalleryGridSectionProps) {
 
             {/* Caption Bar */}
             <div className="w-full pt-4 flex flex-col sm:flex-row sm:items-center justify-between text-white gap-2">
-              <h3 className="font-display text-base sm:text-lg font-medium text-white/95">
+              <h3 className="font-sans text-base sm:text-lg font-semibold text-white/95">
                 {modalItem.title}
               </h3>
               {modalItem.date && (

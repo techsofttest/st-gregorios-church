@@ -38,16 +38,62 @@ export default function DetailHero({
         : ["/interior/Ornate Candlelit Chapel Altar.png"];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const startXRef = useState<{ x: number; time: number }>({ x: 0, time: 0 })[0];
 
   useEffect(() => {
-    if (heroImages.length <= 1) return;
+    if (heroImages.length <= 1 || isDragging) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
     }, 4500);
 
     return () => clearInterval(timer);
-  }, [heroImages.length]);
+  }, [heroImages.length, isDragging]);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (heroImages.length <= 1) return;
+    setIsDragging(true);
+    startXRef.x = e.clientX;
+    startXRef.time = Date.now();
+    setDragOffset(0);
+    // Capture pointer so drag remains smooth even if cursor moves out of container
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startXRef.x;
+    setDragOffset(deltaX);
+  };
+
+  const handlePointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
+
+    const deltaX = e.clientX - startXRef.x;
+    const duration = Date.now() - startXRef.time;
+    const isQuickSwipe = Math.abs(deltaX) > 40 && duration < 300;
+    const isPastThreshold = Math.abs(deltaX) > 80;
+
+    if (isQuickSwipe || isPastThreshold) {
+      if (deltaX < 0) {
+        // Dragged left -> next slide
+        setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+      } else {
+        // Dragged right -> prev slide
+        setCurrentIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+      }
+    }
+
+    setIsDragging(false);
+    setDragOffset(0);
+  };
 
   return (
     <section className="relative w-full bg-[#071b27] text-white overflow-hidden pt-20 lg:pt-0">
@@ -160,28 +206,50 @@ export default function DetailHero({
           </ScrollReveal>
         </div>
 
-        {/* Right Side: Flush Fill Image / Carousel Container (Zero padding around it) */}
-        <div className="relative min-h-[460px] sm:min-h-[520px] lg:min-h-full h-full w-full overflow-hidden group">
-          {heroImages.map((src, idx) => (
-            <div
-              key={`${src}-${idx}`}
-              className={`absolute inset-0 w-full h-full min-h-[460px] sm:min-h-[520px] lg:min-h-full transition-opacity duration-1000 ease-in-out ${idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+        {/* Right Side: Flush Fill Image / Carousel Container with Drag / Touch Gesture Support */}
+        <div
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+          className={`relative min-h-[460px] sm:min-h-[520px] lg:min-h-full h-full w-full overflow-hidden select-none touch-pan-y ${
+            heroImages.length > 1 ? (isDragging ? "cursor-grabbing" : "cursor-grab") : ""
+          }`}
+        >
+          {heroImages.map((src, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <div
+                key={`${src}-${idx}`}
+                style={{
+                  transform:
+                    isActive && isDragging
+                      ? `translateX(${dragOffset}px)`
+                      : "translateX(0px)",
+                  transition: isDragging
+                    ? "none"
+                    : "opacity 900ms ease-in-out, transform 400ms ease-out",
+                }}
+                className={`absolute inset-0 w-full h-full min-h-[460px] sm:min-h-[520px] lg:min-h-full ${
+                  isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
                 }`}
-            >
-              <Image
-                src={src}
-                alt={`${title} - image ${idx + 1}`}
-                fill
-                priority={idx === 0}
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 55vw"
-              />
-              {/* Overlays matching FeastSection aesthetic */}
-              <div className="absolute inset-0 bg-black/15" />
-              <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/75 via-black/30 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 left-0 w-36 sm:w-48 bg-gradient-to-r from-[#071b27] via-[#071b27]/50 to-transparent pointer-events-none hidden lg:block" />
-            </div>
-          ))}
+              >
+                <Image
+                  src={src}
+                  alt={`${title} - image ${idx + 1}`}
+                  fill
+                  draggable={false}
+                  priority={idx === 0}
+                  className="object-cover object-center pointer-events-none"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                />
+                {/* Overlays matching FeastSection aesthetic */}
+                <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/75 via-black/30 to-transparent pointer-events-none" />
+                <div className="absolute inset-y-0 left-0 w-36 sm:w-48 bg-gradient-to-r from-[#071b27] via-[#071b27]/50 to-transparent pointer-events-none hidden lg:block" />
+              </div>
+            );
+          })}
 
           {/* Carousel Pagination Dots Controls (Shown when multiple images exist) */}
           {heroImages.length > 1 && (
@@ -190,12 +258,16 @@ export default function DetailHero({
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => setCurrentIndex(idx)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentIndex(idx);
+                  }}
                   aria-label={`Go to slide ${idx + 1}`}
-                  className={`h-2 transition-all duration-300 rounded-full ${idx === currentIndex
-                    ? "w-16 bg-[#f0d984]"
-                    : "w-2.5 bg-white/50 hover:bg-white"
-                    }`}
+                  className={`h-2 transition-all duration-300 rounded-full cursor-pointer ${
+                    idx === currentIndex
+                      ? "w-16 bg-[#f0d984]"
+                      : "w-2.5 bg-white/50 hover:bg-white"
+                  }`}
                 />
               ))}
             </div>
@@ -206,13 +278,14 @@ export default function DetailHero({
             <div className="absolute bottom-6 right-6 z-20 flex gap-2">
               <button
                 type="button"
-                onClick={() =>
+                onClick={(e) => {
+                  e.stopPropagation();
                   setCurrentIndex(
                     (prev) => (prev - 1 + heroImages.length) % heroImages.length
-                  )
-                }
+                  );
+                }}
                 aria-label="Previous slide"
-                className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#071b27]"
+                className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#071b27] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -227,11 +300,12 @@ export default function DetailHero({
               </button>
               <button
                 type="button"
-                onClick={() =>
-                  setCurrentIndex((prev) => (prev + 1) % heroImages.length)
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+                }}
                 aria-label="Next slide"
-                className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#071b27]"
+                className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#071b27] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

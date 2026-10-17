@@ -26,44 +26,7 @@ export default function WorshipBar() {
           <div className="relative bg-[#071b27]">
             {/* Contained background decorations wrapper so shadow doesn't create layout overflow */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {/* Background Design Element: Filled Syriac/Orthodox Cross SVG at Left Edge */}
-              <div className="absolute top-1/2 -left-12 lg:-left-6 -translate-y-1/2 opacity-[0.09] text-[#e1c66c] z-10">
-                <svg
-                  width="260"
-                  height="340"
-                  viewBox="0 0 200 280"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* Central Glory Ring / Nimbus */}
-                  <circle cx="100" cy="90" r="34" opacity="0.25" />
-                  <circle cx="100" cy="90" r="28" fill="none" stroke="currentColor" strokeWidth="2.5" opacity="0.5" />
 
-                  {/* Main Shaft & Crossbar */}
-                  <rect x="91" y="20" width="18" height="235" rx="2" />
-                  <rect x="94" y="15" width="12" height="245" rx="1" />
-                  <rect x="30" y="81" width="140" height="18" rx="2" />
-                  <rect x="25" y="84" width="150" height="12" rx="1" />
-
-                  <rect x="72" y="42" width="56" height="12" rx="2" />
-                  <rect x="70" y="44" width="60" height="8" rx="1" opacity="0.7" />
-
-                  <polygon points="50,212 150,190 150,206 50,228" />
-
-                  <circle cx="100" cy="8" r="9" />
-                  <circle cx="89" cy="14" r="7.5" />
-                  <circle cx="111" cy="14" r="7.5" />
-                  <circle cx="16" cy="90" r="9" />
-                  <circle cx="23" cy="79" r="7.5" />
-                  <circle cx="23" cy="101" r="7.5" />
-                  <circle cx="184" cy="90" r="9" />
-                  <circle cx="177" cy="79" r="7.5" />
-                  <circle cx="177" cy="101" r="7.5" />
-                  <circle cx="100" cy="270" r="9" />
-                  <circle cx="89" cy="264" r="7.5" />
-                  <circle cx="111" cy="264" r="7.5" />
-                </svg>
-              </div>
 
               {/* Background Design Element: Church Shadow at bottom */}
               <div className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-6 opacity-90 flex justify-end w-[65vw] sm:w-[50vw] max-w-[850px] lg:max-w-[1100px] z-10">
@@ -81,17 +44,30 @@ export default function WorshipBar() {
 
             {/* Main 2-Column Split: Image on Left (aspect-ratio locked, top overflowing), Content on Right */}
             <div className="relative z-10 grid lg:grid-cols-[0.85fr_1.15fr] items-stretch">
-              {/* Left Side: Ornate Illuminated Church Shrine (Locked Aspect Ratio, Overflowing Top) */}
+              {/* Left Side: Layered Shrine Images (Background inside bar, Foreground overflowing top) */}
               <ScrollReveal direction="left" delay={150} className="relative z-20 flex items-end justify-center lg:justify-start">
-                <div className="relative w-full max-w-[540px] aspect-[492/359] -mt-18 sm:-mt-26 lg:-mt-36 mb-0 flex items-end">
+                <div className="relative w-full max-w-[500px] lg:max-w-[520px] aspect-[523/238] flex items-end">
+                  {/* Layer 1: Base Background Shrine Image (Fills the base container) */}
                   <Image
-                    src="/interior/Ornate Illuminated Church ShrineB.png"
-                    alt="Ornate Illuminated Church Shrine"
+                    src="/worship-bar/bg.png"
+                    alt="Church Sanctuary Background"
                     fill
-                    sizes="(max-width: 1024px) 95vw, 45vw"
+                    sizes="(max-width: 1024px) 90vw, 45vw"
                     className="object-contain object-bottom filter contrast-105 pointer-events-none"
                     priority
                   />
+
+                  {/* Layer 2: Foreground Image that dramatically overflows out of the top of the bar */}
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[80%] sm:w-[75%] lg:w-[82%] aspect-[406/382] -mb-1 pointer-events-none z-10 flex items-end">
+                    <Image
+                      src="/worship-bar/foreground.png"
+                      alt="Church Shrine Altar Foreground"
+                      fill
+                      sizes="(max-width: 1024px) 80vw, 40vw"
+                      className="object-contain object-bottom filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]"
+                      priority
+                    />
+                  </div>
                 </div>
               </ScrollReveal>
 
