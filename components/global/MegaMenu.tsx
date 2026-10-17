@@ -143,15 +143,15 @@ export default function MegaMenu({
         className="relative z-50 w-full max-h-[calc(100dvh-56px)] sm:max-h-[calc(100dvh-68px)] lg:max-h-[82vh] overflow-y-auto overscroll-contain bg-[#f7f4ed] text-[#080b0d] shadow-2xl transition-all border-b-4 border-[#a53c33] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-[#e9e3d7] [&::-webkit-scrollbar-thumb]:bg-[#a53c33]/60 hover:[&::-webkit-scrollbar-thumb]:bg-[#a53c33]"
       >
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-7 lg:py-8">
-          {/* Mega Menu Grid: Responsive 1 col on mobile, 2 on phablet, 3 on tablet, 5 on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
+          {/* Mega Menu Grid: 2 cols on mobile, 3 on tablet, 5 on desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-6 sm:gap-6 lg:gap-8">
             {categories.map((category) => (
               <div
                 key={category.title}
-                className="flex flex-col bg-white/50 sm:bg-transparent p-3 sm:p-0 border border-[#272522]/5 sm:border-none shadow-xs sm:shadow-none"
+                className="flex flex-col"
               >
                 {/* Category Banner Header Box */}
-                <div className="bg-[#a53c33] text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase text-center py-1.5 sm:py-2 px-2.5 rounded-none shadow-sm mb-2 sm:mb-2.5 select-none">
+                <div className="bg-[#a53c33] text-white text-[10px] sm:text-xs font-bold tracking-wider uppercase text-center py-1.5 sm:py-2 px-1.5 sm:px-2.5 rounded-none shadow-sm mb-2 sm:mb-2.5 select-none">
                   {category.title}
                 </div>
 

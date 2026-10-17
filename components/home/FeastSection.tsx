@@ -17,14 +17,60 @@ export default function FeastSection({ imageSrc }: FeastSectionProps) {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const startXRef = useState<{ x: number; time: number }>({ x: 0, time: 0 })[0];
 
   useEffect(() => {
+    if (isDragging) return;
+
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % perunnalImages.length);
     }, 4500);
 
     return () => clearInterval(timer);
-  }, [perunnalImages.length]);
+  }, [perunnalImages.length, isDragging]);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    startXRef.x = e.clientX;
+    startXRef.time = Date.now();
+    setDragOffset(0);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startXRef.x;
+    setDragOffset(deltaX);
+  };
+
+  const handlePointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
+
+    const deltaX = e.clientX - startXRef.x;
+    const duration = Date.now() - startXRef.time;
+    const isQuickSwipe = Math.abs(deltaX) > 40 && duration < 300;
+    const isPastThreshold = Math.abs(deltaX) > 80;
+
+    if (isQuickSwipe || isPastThreshold) {
+      if (deltaX < 0) {
+        // Swiped left -> next image
+        setCurrentIndex((prev) => (prev + 1) % perunnalImages.length);
+      } else {
+        // Swiped right -> prev image
+        setCurrentIndex((prev) => (prev - 1 + perunnalImages.length) % perunnalImages.length);
+      }
+    }
+
+    setIsDragging(false);
+    setDragOffset(0);
+  };
 
   return (
     <section className="bg-[#a53c33] text-white overflow-hidden">
@@ -61,28 +107,50 @@ export default function FeastSection({ imageSrc }: FeastSectionProps) {
         </div>
 
 
-        {/* Carousel Container (Right Side) */}
-        <div className="relative min-h-[500px] lg:min-h-[620px] w-full overflow-hidden group">
-          {perunnalImages.map((img, idx) => (
-            <div
-              key={img.src}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                priority={idx === 0}
-              />
-              <div className="absolute inset-0 bg-black/15" />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 via-black/25 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#a53c33] via-[#a53c33]/40 to-transparent pointer-events-none" />
-            </div>
-          ))}
+        {/* Carousel Container (Right Side) with Draggable & Touch Gestures */}
+        <div
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+          className={`relative min-h-[500px] lg:min-h-[620px] w-full overflow-hidden group select-none touch-pan-y ${
+            isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
+        >
+          {perunnalImages.map((img, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <div
+                key={img.src}
+                style={{
+                  transform:
+                    isActive && isDragging
+                      ? `translateX(${dragOffset}px)`
+                      : "translateX(0px)",
+                  transition: isDragging
+                    ? "none"
+                    : "opacity 1000ms ease-in-out, transform 400ms ease-out",
+                }}
+                className={`absolute inset-0 ${
+                  isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                }`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  draggable={false}
+                  className="object-cover pointer-events-none"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  priority={idx === 0}
+                />
+                <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 via-black/25 to-transparent pointer-events-none" />
+                {/* Left gradient hidden on mobile view, shown on desktop (hidden lg:block) */}
+                <div className="hidden lg:block absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#a53c33] via-[#a53c33]/40 to-transparent pointer-events-none" />
+              </div>
+            );
+          })}
 
           {/* Carousel Pagination Controls */}
           <div className="absolute bottom-6 left-6 z-20 flex items-center gap-2">
@@ -90,9 +158,12 @@ export default function FeastSection({ imageSrc }: FeastSectionProps) {
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentIndex(idx)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex(idx);
+                }}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2 transition-all duration-300 rounded-full ${
+                className={`h-2 transition-all duration-300 rounded-full cursor-pointer ${
                   idx === currentIndex
                     ? "w-16 bg-[#f0d984]"
                     : "w-2.5 bg-white/50 hover:bg-white"
@@ -105,13 +176,14 @@ export default function FeastSection({ imageSrc }: FeastSectionProps) {
           <div className="absolute bottom-6 right-6 z-20 flex gap-2">
             <button
               type="button"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 setCurrentIndex(
                   (prev) => (prev - 1 + perunnalImages.length) % perunnalImages.length
-                )
-              }
+                );
+              }}
               aria-label="Previous slide"
-              className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#080b0d]"
+              className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#080b0d] cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -126,11 +198,12 @@ export default function FeastSection({ imageSrc }: FeastSectionProps) {
             </button>
             <button
               type="button"
-              onClick={() =>
-                setCurrentIndex((prev) => (prev + 1) % perunnalImages.length)
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentIndex((prev) => (prev + 1) % perunnalImages.length);
+              }}
               aria-label="Next slide"
-              className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#080b0d]"
+              className="flex h-10 w-10 items-center justify-center bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-[#f0d984] hover:text-[#080b0d] cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
