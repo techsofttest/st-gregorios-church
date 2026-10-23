@@ -54,69 +54,76 @@ export default function HeritageSection({ imageSrc }: HeritageSectionProps) {
   ];
 
   return (
-    <section className="relative bg-[#111c20] text-white overflow-hidden min-h-[580px] sm:min-h-[640px] lg:min-h-[700px] flex flex-col justify-end">
-      {/* Background Image Carousel (Smooth cross-fade, isolated pointer-events-none) */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {historyImages.map((img, idx) => (
-          <div
-            key={img.src}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === currentIndex ? "opacity-100" : "opacity-0"
-              }`}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority={idx === 0}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Content Container aligned to bottom right */}
-      <div className="relative z-30 ml-auto flex justify-end p-6 sm:p-10 lg:p-12">
-        <ScrollReveal direction="right" duration={850}>
-          <div className="w-full max-w-[440px] sm:max-w-[480px] bg-[#111c20]/75 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-2xl">
-            <p className="eyebrow text-white text-[10px] sm:text-xs">Our Heritage</p>
-
-            <h2 className="font-display text-2xl sm:text-3xl font-semibold leading-tight mt-2 text-white">
-              From{" "}
-              <span className="text-[#d6b75b]">1994</span>{" "}
-              onwards.
+    <section className="bg-white text-[#171715] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        {/* Centered Section Heading above the banner */}
+        <ScrollReveal direction="up" duration={750}>
+          <div className="mb-8 sm:mb-10 lg:mb-12 text-center">
+            <p className="eyebrow text-[#a43a32] text-[10px] sm:text-xs">Our Heritage</p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mt-3 text-[#111c20]">
+              From <span className="text-[#a43a32]">1994</span> onwards.
             </h2>
-
-            <p className="mt-3.5 text-xs sm:text-[13px] leading-relaxed text-white/90">
-              The Jacobite Syrian Church in Mumbai began its journey in 1994.
-              Through decades of prayer, sacrifice and perseverance, the St.
-              Gregorios parish grew into the spiritual home it is today.
-            </p>
-
-            <div className="mt-3.5 grid grid-cols-2 py-2.5 border-y border-white/10 my-3.5">
-              {milestones.map((milestone) => (
-                <div key={`${milestone.year}-${milestone.label}`}>
-                  <p className="font-display text-3xl sm:text-4xl font-semibold text-[#d6b75b]">
-                    {milestone.year}
-                  </p>
-                  <p className="mt-1 text-xs tracking-[0.14em] text-white/80">
-                    {milestone.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5">
-              <Link
-                href="/history"
-                className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#d6b75b] hover:text-white transition-colors group/btn"
-              >
-                <span>Read More</span>
-                <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
-              </Link>
-            </div>
           </div>
         </ScrollReveal>
+
+        {/* Boxed Banner with Carousel and Content Card */}
+        <div className="relative overflow-hidden min-h-[500px] sm:min-h-[560px] lg:min-h-[600px] flex flex-col justify-end border border-white/10">
+          {/* Background Image Carousel (Smooth cross-fade, isolated pointer-events-none) */}
+          <div className="absolute inset-0 pointer-events-none z-0">
+            {historyImages.map((img, idx) => (
+              <div
+                key={img.src}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === currentIndex ? "opacity-100" : "opacity-0"
+                  }`}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  priority={idx === 0}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Content Container aligned to bottom right inside the boxed banner */}
+          <div className="relative z-30 ml-auto flex justify-end p-5 sm:p-8 lg:p-10">
+            <ScrollReveal direction="right" duration={850}>
+              <div className="w-full max-w-[440px] sm:max-w-[480px] bg-[#111c20]/80 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-2xl">
+
+                <div className="grid grid-cols-2 pb-2.5 border-b border-white/10 mb-3.5">
+                  {milestones.map((milestone) => (
+                    <div key={`${milestone.year}-${milestone.label}`}>
+                      <p className="font-display text-3xl sm:text-4xl font-semibold text-[#d6b75b]">
+                        {milestone.year}
+                      </p>
+                      <p className="mt-1 text-xs tracking-[0.14em] text-white/80">
+                        {milestone.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs sm:text-[13px] leading-relaxed text-white/90">
+                  The Jacobite Syrian Church in Mumbai began its journey in 1994.
+                  Through decades of prayer, sacrifice and perseverance, the St.
+                  Gregorios parish grew into the spiritual home it is today.
+                </p>
+
+                <div className="mt-5">
+                  <Link
+                    href="/history"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-[#d6b75b] hover:text-white transition-colors group/btn"
+                  >
+                    <span>Read More</span>
+                    <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                  </Link>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
       </div>
     </section>
   );

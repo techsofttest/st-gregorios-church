@@ -47,11 +47,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        isSolidHeader
-          ? "bg-[#071b27] shadow-xl"
-          : "bg-transparent border-b border-transparent shadow-none"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${isSolidHeader
+        ? "bg-[#071b27] shadow-xl"
+        : "bg-transparent border-b border-transparent shadow-none"
+        }`}
     >
       {/* Top Header Bar */}
       <div className="relative mx-auto flex max-w-[1600px] items-center justify-between px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3.5">
@@ -59,9 +58,8 @@ export default function Header() {
         <Link
           href="/"
           onClick={() => setMenuOpen(false)}
-          className={`group flex items-center gap-2 sm:gap-3.5 transition-opacity duration-300 min-w-0 pr-2 ${
-            isLogoVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-          }`}
+          className={`group flex items-center gap-2 sm:gap-3.5 transition-opacity duration-300 min-w-0 pr-2 ${isLogoVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
         >
           <Image
             src="/logo/logo.png"
@@ -80,32 +78,20 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Centered Christian Orthodox Cross SVG - Hidden on mobile/tablet to avoid collision with branding & button */}
+        {/* Centered Cross SVG */}
         <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 40 52"
-            className="h-7 w-7 lg:h-9 lg:w-9 text-[#d6b75b]"
+            viewBox="0 0 24 32"
+            className="h-8 w-7 lg:h-10 lg:w-8 text-[#d6b75b] drop-shadow-sm"
             fill="currentColor"
-            aria-label="Christian Orthodox Cross"
+            aria-label="Christian Cross"
           >
-            {/* Main Vertical Beam */}
-            <rect x="18" y="2" width="4" height="48" rx="0.5" />
-
-            {/* Top Inscription Bar */}
-            <rect x="13" y="8" width="14" height="3" rx="0.5" />
-
-            {/* Main Horizontal Arm Bar */}
-            <rect x="4" y="18" width="32" height="4" rx="0.5" />
-
-            {/* Slanted Lower Footrest Bar (Orthodox Suppedaneum) */}
-            <polygon points="10,39.5 30,33.5 30,36.5 10,42.5" />
-
-            {/* Ornate Budded Endings */}
-            <circle cx="20" cy="2" r="2" />
-            <circle cx="20" cy="50" r="2" />
-            <circle cx="4" cy="20" r="2" />
-            <circle cx="36" cy="20" r="2" />
+            {/* Simple Latin Cross */}
+            {/* Vertical Beam */}
+            <rect x="10.25" y="1" width="3.5" height="30" rx="1" />
+            {/* Horizontal Arm */}
+            <rect x="3" y="8.5" width="18" height="3.5" rx="1" />
           </svg>
         </div>
 
@@ -120,19 +106,16 @@ export default function Header() {
           >
             <span className="relative block h-3.5 w-4 sm:h-4 sm:w-5 shrink-0">
               <span
-                className={`absolute left-0 top-0 block h-[2px] w-full bg-white transition-all duration-300 ${
-                  menuOpen ? "top-[6px] sm:top-[7px] rotate-45" : ""
-                }`}
+                className={`absolute left-0 top-0 block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[6px] sm:top-[7px] rotate-45" : ""
+                  }`}
               />
               <span
-                className={`absolute left-0 top-[6px] sm:top-[7px] block h-[2px] w-4/5 bg-white transition-all duration-300 ${
-                  menuOpen ? "opacity-0" : ""
-                }`}
+                className={`absolute left-0 top-[6px] sm:top-[7px] block h-[2px] w-4/5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""
+                  }`}
               />
               <span
-                className={`absolute left-0 top-[12px] sm:top-[14px] block h-[2px] w-full bg-white transition-all duration-300 ${
-                  menuOpen ? "top-[6px] sm:top-[7px] -rotate-45" : ""
-                }`}
+                className={`absolute left-0 top-[12px] sm:top-[14px] block h-[2px] w-full bg-white transition-all duration-300 ${menuOpen ? "top-[6px] sm:top-[7px] -rotate-45" : ""
+                  }`}
               />
             </span>
             <span className="whitespace-nowrap">
